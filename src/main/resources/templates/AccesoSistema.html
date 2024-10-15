@@ -3,8 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <title>Acceso al sistema</title>
+<link rel="stylesheet" href="/estilos.css">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
 </head>
 <body>
-<a href="/index.html">Volver</a>
+	<a href="/index.html"> <img class="flechaAzul"
+		src="img/flechaAzul.png" />
+	</a>
+	<div class="content">
+		<section class="sectionLogin">
+			<div class="tituloLogin">
+				<img class="imgLogo" src="/img/VeterinariaGoofyLogo.png" />
+				<h2>Iniciar sesión</h2>
+			</div>
+			<br>
+			<div>
+				<form method="post">
+					<div>
+						<label>Correo:</label> <input type="email">
+					</div>
+					<div>
+						<label>Contraseña:</label> <input type="password">
+					</div>
+				</form>
+			</div>
+			<div>
+				<button class="boton-ingresar" type="submit">Ingresar</button>
+			</div>
+		</section>
+		<div class="linea"></div>
+		<footer class="footerLogin">
+		<div class="contactos">
+			<h3 id="conttit">Contacto</h3>
+			<div class="contacto-item">
+				<img class="icono" src="img/telefono.png" alt="Teléfono" />
+				<p>Numero Telefono:</p>
+			</div>
+			<div class="contacto-item">
+				<img class="icono" src="img/correo.png" alt="Correo Electrónico" />
+				<p>Correo Electronico:</p>
+			</div>
+		</div>
+		</footer>
+	</div>
 </body>
 </html>

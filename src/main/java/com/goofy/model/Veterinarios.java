@@ -7,8 +7,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Veterinario")
-public class Medicos {
+@Table(name = "tb_veterinario")
+public class Veterinarios {
 	@Id
 	private int id_veterinario;
     private String DNI;

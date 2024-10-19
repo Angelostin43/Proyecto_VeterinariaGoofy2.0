@@ -1,0 +1,50 @@
+[33mcommit e2cd49507e483136030b9bb9482557aec47309d9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Angelo Llanos <angeloztin@gmail.com>
+Date:   Mon Oct 14 18:49:38 2024 -0500
+
+    CConexion a base de datos externa realizada ✔
+
+[33mcommit 30d79cbc0693435da2a7ed4289c3161d8db9337e[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Angelostin43 <126596066+Angelostin43@users.noreply.github.com>
+Date:   Mon Oct 14 18:21:31 2024 -0500
+
+    Tratando de conectarlo a una base de datos externa 4
+
+[33mcommit 4dcea62f6fabe3f0d9bbf0d3ca49c3700a1b7f29[m
+Author: Angelostin43 <126596066+Angelostin43@users.noreply.github.com>
+Date:   Mon Oct 14 18:05:19 2024 -0500
+
+    Tratando de conectarlo a una base de datos externa 3
+
+[33mcommit 7aaea9965b22c9c3106bc0596d4e356cfa7f02fe[m
+Author: Angelostin43 <126596066+Angelostin43@users.noreply.github.com>
+Date:   Mon Oct 14 17:59:20 2024 -0500
+
+    Tratando de conectarlo a una base de datos externa 2
+
+[33mcommit c611ca8ba044bcf705a25c753ae675871c4b82fa[m
+Merge: ac69ff8 b9832e2
+Author: Angelostin43 <126596066+Angelostin43@users.noreply.github.com>
+Date:   Mon Oct 14 17:51:41 2024 -0500
+
+    Merge pull request #1 from Angelostin43/Angelostin43-patch-1
+    
+    Tratando de conectarlo a una base de datos externa
+
+[33mcommit b9832e20ebb207ba1f804090c844582a4bf64c63[m
+Author: Angelostin43 <126596066+Angelostin43@users.noreply.github.com>
+Date:   Mon Oct 14 17:50:54 2024 -0500
+
+    Tratando de conectarlo a una base de datos externa
+
+[33mcommit ac69ff87a27cb82c57862dead6b5bb2f7c46d73a[m
+Author: Angelostin43 <126596066+Angelostin43@users.noreply.github.com>
+Date:   Mon Oct 14 17:38:43 2024 -0500
+
+    Quitar Configuracion Base de datos
+
+[33mcommit 79c0f4c8e1bcde7fb46af2920bbc5eebe4076cf5[m
+Author: Angelo Llanos <angeloztin@gmail.com>
+Date:   Sun Oct 13 23:46:11 2024 -0500
+
+    Estructura del proyecto / Comienzo de Veterinaria Goofy

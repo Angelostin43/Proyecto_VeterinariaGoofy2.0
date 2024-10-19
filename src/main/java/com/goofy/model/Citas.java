@@ -9,11 +9,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Ficha_atencion")
+@Table(name = "tb_ficha_atencion")
 public class Citas {
 	@Id
 	private int id_ficha;
-    private String Fecha_cita;
+    private String fech_cita;
     private int id_mascota;
     private int id_veterinario;
     
@@ -25,5 +25,5 @@ public class Citas {
     @ManyToOne
 	@JoinColumn(name = "id_veterinario",
 	insertable = false, updatable = false)
-	private Medicos objVet;
+	private Veterinarios objVet;
 }

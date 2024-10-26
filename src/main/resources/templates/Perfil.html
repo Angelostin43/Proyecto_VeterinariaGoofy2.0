@@ -5,6 +5,23 @@
 <title>Perfil</title>
 </head>
 <body>
+<script th:inline="javascript">
+        // Utilizar th:inline para asegurar que se renderice correctamente
+        const usuarioLogueado = /*[[${usuarioLogueado}]]*/ {};
+        console.log('Usuario:', usuarioLogueado);
+        
+        // Almacenar en local storage
+        localStorage.setItem("usuarioLogueado", JSON.stringify(usuarioLogueado));
+    </script>
+
+  <h2>Bienvenido, <span th:text="${usuarioLogueado.nombre}">Nombre del Dueño</span></h2>
+  
+
+  <h2>Bienvenido, <span th:text="${usuarioLogueado}">Nombre del Dueño</span></h2>
 <a href="/index.html">Volver</a>
+ 
+   
+
+
 </body>
 </html>

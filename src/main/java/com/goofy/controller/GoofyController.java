@@ -1,5 +1,7 @@
 package com.goofy.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.goofy.interfaces.ICitasRepository;
 import com.goofy.interfaces.IDuenioRepository;
+import com.goofy.interfaces.IMascotaRepository;
 import com.goofy.interfaces.IVeterinariosRepository;
-import com.goofy.model.Dueño;
+import com.goofy.model.Duenio;
 import com.goofy.model.Veterinario;
+
+import jakarta.servlet.http.HttpSession;
+
 
 @Controller
 public class GoofyController {
@@ -32,21 +38,25 @@ public class GoofyController {
 		return "AccesoSistema";
 	}
 
-	@PostMapping("/AccesoSistema")
-	public String leerSesion(@RequestParam String correo, @RequestParam String contraseña, Model model) {
-		Dueño d = repoDue.findByCorreoAndContraseña(correo, contraseña);
-		if (d != null) {
-			System.out.println("Funciona");
-			model.addAttribute("mensaje", "Bienvenido");
-			model.addAttribute("cssmensaje", "DueSi");
-			return "redirect:/AgendarCita";
-		} else {
-			System.out.println("No Funciona");
-			model.addAttribute("mensaje", "Usuario o clave erroneos");
-			model.addAttribute("cssmensaje", "DueNo");
-			return "AccesoSistema";
-		}
+
+	@PostMapping("/login")
+	public String iniciarSesion(@RequestParam("correo") String correo, 
+	                            @RequestParam("contraseña") String contraseña, 
+	                            HttpSession session, 
+	                            Model model) {
+	    Duenio usuarioLogueado = repoDue.findByCorreoAndContraseña(correo, contraseña);
+	    System.out.println("Usuario logueado: " + usuarioLogueado);
+
+	    if (usuarioLogueado != null) {
+	        session.setAttribute("usuarioLogueado", usuarioLogueado);
+	        model.addAttribute("usuarioLogueado", usuarioLogueado); // Asegúrate de que se está agregando al modelo
+	        return "Perfil"; // Redirige a la vista Perfil
+	    } else {
+	        model.addAttribute("error", "Correo o contraseña incorrectos");
+	        return "AccesoSistema"; // Muestra mensaje de error
+	    }
 	}
+
 
 	@GetMapping("/AgendarCita")
 	public String cargarAgendarCita(Model model) {
@@ -93,4 +103,23 @@ public class GoofyController {
 	public String cargarPerfil() {
 		return "Perfil";
 	}
+	@Autowired
+	private IMascotaRepository repoMascota;
+	
+	@PostMapping("/actualizarPerfil")
+	public String actualizarPerfil(@ModelAttribute Duenio dueñoActualizado, HttpSession session) {
+	    Duenio usuarioActual = (Duenio) session.getAttribute("usuarioLogueado");
+	    if (usuarioActual != null) {
+	        usuarioActual.setNombre(dueñoActualizado.getNombre());
+	        usuarioActual.setApellido(dueñoActualizado.getApellido());
+	        usuarioActual.setTelefono(dueñoActualizado.getTelefono());
+	        usuarioActual.setCorreo(dueñoActualizado.getCorreo());
+	        
+	        repoDue.save(usuarioActual);
+	        session.setAttribute("usuarioLogueado", usuarioActual);
+	    }
+	    return "redirect:/Perfil";
+	}
+
+
 }

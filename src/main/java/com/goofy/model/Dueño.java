@@ -7,19 +7,26 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
-
 @Data
 @Entity
-@Table(name = "tb_mascota")
-public class Mascota {
+@Table(name = "tb_dueño")
+public class Dueño {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_mascota")
-	private int id_mascota;
-    private int Edad;
-    private double Peso;
-    private String Nombre;
-    private String Raza;
-    private String Sexo;
-    private int id_dueño;
-}
+    @Column(name = "dni")
+
+    private String dni;
+
+    private String genero;
+
+    private String nombre;
+
+    private String apellido;
+
+    private String telefono;
+
+    private String correo;
+
+    private String contraseña;
+    }

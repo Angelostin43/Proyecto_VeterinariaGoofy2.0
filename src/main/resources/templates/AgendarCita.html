@@ -3,8 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <title>Agendar Cita</title>
+<link rel="stylesheet" href="/estilos.css">
+<link
+	href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"
+	rel="stylesheet">
 </head>
 <body>
-<a href="/index.html">Volver</a>
+	<header th:replace="~{Plantilla.html :: cabecera}"></header>
+	<div class="linea"></div>
+	<section class="section">
+		<div class="titulo">
+			<h2>Agendar Cita</h2>
+		</div>
+		<br>
+		<div>
+			<form th:object="${veterinario}" method="post">
+				<div>
+					<label>Mascota</label> <select>
+						<option value="0" selected>Seleccione...</option>
+						<option value="1">Proximamente</option>
+						<option value="2">Proximamente</option>
+					</select>
+				</div>
+				<div>
+					<label>Veterinario</label> <select th:field="*{id_veterinario}"
+						id="inputState" class="form-select">
+						<option value="0" selected>Seleccione...</option>
+						<option th:each="vet : ${lstVeterinarios}"
+							th:value="${vet.id_veterinario}" th:text="${vet.Nombre}"></option>
+					</select>
+				</div>
+				<div>
+					<label>Fecha de atención:</label> <input type="text">
+				</div>
+				<div>
+					<label>Hora de atención:</label> <input type="text">
+				</div>
+			</form>
+		</div>
+		<div>
+			<button class="boton-ingresar" type="submit">Agendar Cita</button>
+		</div>
+		<br> <br> <br> <br> <br> <br> <br>
+		<br> <br> <br> <br> <br> <br>
+	</section>
+	<div class="linea"></div>
+	<footer th:replace="~{Plantilla.html :: footer}"></footer>
 </body>
 </html>

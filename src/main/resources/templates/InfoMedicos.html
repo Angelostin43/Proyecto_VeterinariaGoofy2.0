@@ -17,7 +17,10 @@
 		<h1>Registro de cuenta</h1>
 		<form method="post" action="/grabar" th:object="${veterinario}">
 		<div>
+		<input type="hidden" th:field="*{id_veterinario}" />
+
 				<label for="InputDni" class="form-label">DNI</label>
+				
 				<input th:field="*{dni}" type="text" class="form-control"
 					id="InputDni" name="dni">
 

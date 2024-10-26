@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<footer th:fragment="footer" class="footer">
+		<div class="contactos">
+			<h3 id="conttit">Contacto</h3>
+			<div class="contacto-item">
+				<img class="icono" src="img/telefono.png" alt="Teléfono" />
+				<p>Numero Telefono: 946 901 349</p>
+			</div>
+			<div class="contacto-item">
+				<img class="icono" src="img/correo.png" alt="Correo Electrónico" />
+				<p>Correo Electronico: angeloztim@gmail.com</p>
+			</div>
+		</div>
+	</footer>
+	<header th:fragment="cabecera" class="cabecera">
+		<img src="/img/ManchaDorada.png" class="mancha" /> <a
+			href="/index.html"> <img class="imgLogoCab"
+			src="/img/VeterinariaGoofyLogo.png" />
+		</a> <img class="imgPatitas" src="/img/patitas.png" />
+		<div class="botonesCab">
+			<a href="/MascotaRegistro" class="textSesion">Registrar Mascota</a><a
+				href="/InfoMedicos" class="textSesion">Veterinarios</a> <a
+				href="/AccesoSistema" class="textSesion">Iniciar sesión</a> <a>
+				<img class="imgLogoPer" src="/img/PerfilLogo.png" />
+			</a>
+		</div>
+	</header>
+
+</body>
+</html>

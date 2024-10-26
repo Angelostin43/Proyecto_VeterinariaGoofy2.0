@@ -7,36 +7,61 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.goofy.interfaces.ICitasRepository;
+import com.goofy.interfaces.IDuenioRepository;
 import com.goofy.interfaces.IVeterinariosRepository;
+import com.goofy.model.Dueño;
 import com.goofy.model.Veterinario;
 
 @Controller
 public class GoofyController {
 
-	@GetMapping("/AccesoSistema")
-	public String cargarAccesoSistema() {
-		return "AccesoSistema";
-	}
+	@Autowired
+	private IVeterinariosRepository repoVet;
 
-	@GetMapping("/AgendarCita")
-	public String cargarAgendarCita() {
-		return "AgendarCita";
-	}
+	@Autowired
+	private IDuenioRepository repoDue;
 
 	@Autowired
 	private ICitasRepository repoCit;
+	
+	@GetMapping("/AccesoSistema")
+	public String cargarAccesoSistema(Model model) {
+		return "AccesoSistema";
+	}
+
+	@PostMapping("/AccesoSistema")
+	public String leerSesion(@RequestParam String correo, @RequestParam String contraseña, Model model) {
+		Dueño d = repoDue.findByCorreoAndContraseña(correo, contraseña);
+		if (d != null) {
+			System.out.println("Funciona");
+			model.addAttribute("mensaje", "Bienvenido");
+			model.addAttribute("cssmensaje", "DueSi");
+			return "redirect:/AgendarCita";
+		} else {
+			System.out.println("No Funciona");
+			model.addAttribute("mensaje", "Usuario o clave erroneos");
+			model.addAttribute("cssmensaje", "DueNo");
+			return "AccesoSistema";
+		}
+	}
+
+	@GetMapping("/AgendarCita")
+	public String cargarAgendarCita(Model model) {
+		model.addAttribute("veterinario", new Veterinario());
+		model.addAttribute("lstVeterinarios", repoVet.findAll());
+		return "AgendarCita";
+	}
+
 
 	@GetMapping("/Citas")
 	public String cargarCitas(Model model) {
 		model.addAttribute("lstCitas", repoCit.findAll());
 		return "Citas";
 	}
-
-	@Autowired
-	private IVeterinariosRepository repoVet;
-
+	
 	@GetMapping("/InfoMedicos")
 	public String cargarInfoMedicos(Model model) {
 		model.addAttribute("veterinario", new Veterinario());

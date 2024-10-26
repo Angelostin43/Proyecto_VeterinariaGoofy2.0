@@ -33,6 +33,8 @@ public class GoofyController {
 
 	@Autowired
 	private ICitasRepository repoCit;
+	@Autowired
+	private IMascotaRepository repoMas;
 	
 	@Autowired
 	private IMascotaRepository repoMascota;
@@ -53,11 +55,11 @@ public class GoofyController {
 
 	    if (usuarioLogueado != null) {
 	        session.setAttribute("usuarioLogueado", usuarioLogueado);
-	        model.addAttribute("usuarioLogueado", usuarioLogueado); // Asegúrate de que se está agregando al modelo
-	        return "Perfil"; // Redirige a la vista Perfil
+	        model.addAttribute("usuarioLogueado", usuarioLogueado); 
+	        return "Perfil"; 
 	    } else {
 	        model.addAttribute("error", "Correo o contraseña incorrectos");
-	        return "AccesoSistema"; // Muestra mensaje de error
+	        return "AccesoSistema"; 
 	    }
 	}
 
@@ -103,7 +105,15 @@ public class GoofyController {
 		model.addAttribute("mascota", new Mascota());
 		return "MascotaRegistro";
 	}
-	
+
+	   @GetMapping("/mascotasLista")
+	    public String listarMascotas(@RequestParam("idDueno") int idDueno, Model model) {
+		    System.out.println("IDDUeño"+idDueno);
+	        List<Mascota> mascotas = repoMas.findByDueño_Id(idDueno); 
+	        model.addAttribute("mascotas", mascotas);
+	        return "MascotaRegistro";
+	    }
+
 	@GetMapping("/Perfil")
 	public String cargarPerfil() {
 		return "Perfil";
@@ -124,5 +134,5 @@ public class GoofyController {
 	    return "redirect:/Perfil";
 	}
 
-
+	
 }

@@ -6,11 +6,9 @@
 </head>
 <body>
 <script th:inline="javascript">
-        // Utilizar th:inline para asegurar que se renderice correctamente
         const usuarioLogueado = /*[[${usuarioLogueado}]]*/ {};
         console.log('Usuario:', usuarioLogueado);
-        
-        // Almacenar en local storage
+        localStorage.setItem("formSubmitted",'false');
         localStorage.setItem("usuarioLogueado", JSON.stringify(usuarioLogueado));
     </script>
 

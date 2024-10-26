@@ -5,6 +5,54 @@
 <title>Registrar Mascotas</title>
 </head>
 <body>
+
+    <h2>Listado de Mascotas</h2>
+    	<div class="tabular--wrapper">
+				<div class="table-container">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Nombre</th>
+								<th>Peso</th>
+								<th>Raza</th>
+								<th>Sexo</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="mascota : ${mascotas}">
+								<td th:text="${mascota.id}"></td>
+								<td th:text="${mascota.nombre}"></td>
+								<td th:text="${mascota.peso}"></td>
+								<td th:text="${mascota.raza}"></td>
+								<td th:text="${mascota.sexo}"></td>
+							
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+    <form id="formDueno" action="/mascotasLista" method="get" style="display:none;">
+        <input type="hidden" name="idDueno" id="idDuenoInput">
+    </form>
+
+     <script>
+        const usuarioLogueado = JSON.parse(localStorage.getItem("usuarioLogueado"));
+    
+        if (usuarioLogueado) {
+        	if (localStorage.getItem('formSubmitted') !== 'true') {
+                document.getElementById("idDuenoInput").value = usuarioLogueado.id;
+                document.getElementById("formDueno").submit();
+                localStorage.setItem("formSubmitted", 'true'); // Marcar que el formulario ha sido enviado
+            }
+        } else {
+            console.error("No se encontró el ID del dueño en el localStorage");
+        }
+      
+    </script>
+
+
 <a href="/index.html">Volver</a>
 </body>
 </html>

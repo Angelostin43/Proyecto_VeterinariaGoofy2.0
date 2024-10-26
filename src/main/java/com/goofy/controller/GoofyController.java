@@ -7,66 +7,86 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.goofy.interfaces.ICitasRepository;
-import com.goofy.interfaces.IDuenoRepository;
+import com.goofy.interfaces.IDuenioRepository;
 import com.goofy.interfaces.IMascotaRepository;
-import com.goofy.interfaces.IMedicosRepository;
+import com.goofy.interfaces.IVeterinariosRepository;
 import com.goofy.model.Dueño;
-import com.goofy.model.Mascota;
+import com.goofy.model.Veterinario;
 
 import jakarta.servlet.http.HttpSession;
 
+
 @Controller
 public class GoofyController {
-	 @Autowired
-	    private IDuenoRepository repoDueño;
-	@GetMapping("/AccesoSistema")
-	public String cargarAccesoSistema() {
-		return "AccesoSistema";
-	}
-	@PostMapping("/login")
-	public String iniciarSesion(@RequestParam("correo") String correo, 
-	                            @RequestParam("contraseña") String contraseña, 
-	                            HttpSession session, 
-	                            Model model) {
-	    Dueño usuarioLogueado = repoDueño.findByCorreoAndContraseña(correo, contraseña);
-        System.out.println("Usuario logueado: " + usuarioLogueado);
 
-	    
-	    if (usuarioLogueado != null) {
-	        session.setAttribute("usuarioLogueado", usuarioLogueado);
-	        model.addAttribute("usuarioLogueado", usuarioLogueado);
-	        return "Perfil"; // Redirige a la vista Perfil
-	    } else {
-	        model.addAttribute("error", "Correo o contraseña incorrectos");
-	        return "AccesoSistema"; // Muestra mensaje de error
-	    }
-	}
+	@Autowired
+	private IVeterinariosRepository repoVet;
 
-
-	@GetMapping("/AgendarCita")
-	public String cargarAgendarCita() {
-		return "AgendarCita";
-	}
+	@Autowired
+	private IDuenioRepository repoDue;
 
 	@Autowired
 	private ICitasRepository repoCit;
+	
+	@GetMapping("/AccesoSistema")
+	public String cargarAccesoSistema(Model model) {
+		return "AccesoSistema";
+	}
+
+	@PostMapping("/AccesoSistema")
+	public String leerSesion(@RequestParam String correo, @RequestParam String contraseña, Model model) {
+		Dueño d = repoDue.findByCorreoAndContraseña(correo, contraseña);
+		if (d != null) {
+			System.out.println("Funciona");
+			model.addAttribute("mensaje", "Bienvenido");
+			model.addAttribute("cssmensaje", "DueSi");
+			return "redirect:/AgendarCita";
+		} else {
+			System.out.println("No Funciona");
+			model.addAttribute("mensaje", "Usuario o clave erroneos");
+			model.addAttribute("cssmensaje", "DueNo");
+			return "AccesoSistema";
+		}
+	}
+
+	@GetMapping("/AgendarCita")
+	public String cargarAgendarCita(Model model) {
+		model.addAttribute("veterinario", new Veterinario());
+		model.addAttribute("lstVeterinarios", repoVet.findAll());
+		return "AgendarCita";
+	}
+
 
 	@GetMapping("/Citas")
 	public String cargarCitas(Model model) {
 		model.addAttribute("lstCitas", repoCit.findAll());
 		return "Citas";
 	}
-
-	@Autowired
-	private IMedicosRepository repoMed;
-
+	
 	@GetMapping("/InfoMedicos")
 	public String cargarInfoMedicos(Model model) {
-		model.addAttribute("lstMedicos", repoMed.findAll());
+		model.addAttribute("veterinario", new Veterinario());
+		model.addAttribute("lstVets", repoVet.findAll());
+		return "InfoMedicos";
+	}
+	
+	@PostMapping("/grabar")
+	public String grabarInfoMedicos(Model model, @ModelAttribute Veterinario veterinario) {
+		System.out.println(veterinario);
+		repoVet.save(veterinario);
+		return "redirect:/InfoMedicos";
+	}
+	
+	@GetMapping("/editar/{id_veterinario}")
+	public String editar(@PathVariable Integer id_veterinario, Model model) {
+		Veterinario v = repoVet.findById(id_veterinario).get();
+		model.addAttribute("veterinario", v);
+		model.addAttribute("lstVets", repoVet.findAll());
 		return "InfoMedicos";
 	}
 
@@ -91,7 +111,7 @@ public class GoofyController {
 	        usuarioActual.setTelefono(dueñoActualizado.getTelefono());
 	        usuarioActual.setCorreo(dueñoActualizado.getCorreo());
 	        
-	        repoDueño.save(usuarioActual);
+	        repoDue.save(usuarioActual);
 	        session.setAttribute("usuarioLogueado", usuarioActual);
 	    }
 	    return "redirect:/Perfil";

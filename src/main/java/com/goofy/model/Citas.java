@@ -25,5 +25,5 @@ public class Citas {
     @ManyToOne
 	@JoinColumn(name = "id_veterinario",
 	insertable = false, updatable = false)
-	private Veterinarios objVet;
+	private Veterinario objVet;
 }

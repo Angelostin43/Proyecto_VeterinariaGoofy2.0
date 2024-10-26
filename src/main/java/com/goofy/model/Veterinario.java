@@ -8,12 +8,12 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "tb_veterinario")
-public class Veterinarios {
+public class Veterinario {
 	@Id
 	private int id_veterinario;
-    private String DNI;
-    private String Genero;
-    private String Nombre;
-    private String Apellido;
-    private String Telefono;
+    private String dni;
+    private String genero;
+    private String nombre;
+    private String apellido;
+    private String telefono;
 }

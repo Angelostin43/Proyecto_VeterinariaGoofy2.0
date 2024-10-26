@@ -9,59 +9,61 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 <body>
-	<div class="container">
-		<nav th:fragment="nav">
-			<ul>
-				<li><a href="#" class="logo"> <img
-						src="img/VeterinariaGoofyLogo.png" alt="">
-				</a></li>
-				<li><a href="/Perfil"> <i class="fas fa-home"></i> <span
-						class="nav-item">Home</span>
-				</a></li>
-				<li><a href="/AgendarCita"> <i class="fas fa-paste"></i> <span
-						class="nav-item">Agendar Cita</span>
-				</a></li>
-				<li><a href="/Citas"> <i class="fas fa-heart"></i> <span
-						class="nav-item">Citas</span>
-				</a></li>
-				<li><a href="/InfoMedicos"> <i class="fas fa-stethoscope"></i>
-						<span class="nav-item">Veterinarios</span>
-				</a></li>
-				<li><a href="/MascotaRegistro"> <i class="fas fa-paw"></i>
-						<span class="nav-item">Registrar mascota</span>
-				</a></li>
-				<li><a href="/AccesoSistema" class="logout"> <i
-						class="fas fa-sign-out-alt"></i> <span class="nav-item">Log
-							out</span>
-				</a></li>
-			</ul>
-		</nav>
+	<nav th:fragment="nav">
+		<ul>
+			<li><a href="#" class="logo"> <img
+					src="img/VeterinariaGoofyLogo.png" alt="">
+			</a></li>
+			<li><a href="/Perfil"> <i class="fas fa-home"></i> <span
+					class="nav-item">Home</span>
+			</a></li>
+			<li><a href="/AgendarCita"> <i class="fas fa-paste"></i> <span
+					class="nav-item">Agendar Cita</span>
+			</a></li>
+			<li><a href="/Citas"> <i class="fas fa-heart"></i> <span
+					class="nav-item">Citas</span>
+			</a></li>
+			<li><a href="/InfoMedicos"> <i class="fas fa-stethoscope"></i>
+					<span class="nav-item">Veterinarios</span>
+			</a></li>
+			<li><a href="/MascotaRegistro"> <i class="fas fa-paw"></i> <span
+					class="nav-item">Registrar mascota</span>
+			</a></li>
+			<li><a href="/AccesoSistema" class="logout"> <i
+					class="fas fa-sign-out-alt"></i> <span class="nav-item">Log
+						out</span>
+			</a></li>
+		</ul>
+	</nav>
 
-		<section class="main">			
-			<div class="tabular--wrapper">
-			<h3 class="main-title">Listado de citas</h3>
-				<div class="table-container">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>Fecha</th>
-								<th>Mascota</th>
-								<th>Veterinario</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="cit : ${lstCitas}">
-								<td th:text="${cit.id_ficha}"></td>
-								<td th:text="${cit.fech_cita}"></td>
-								<td th:text="${cit.objMascota.Nombre}"></td>
-								<td th:text="${cit.objVet.Apellido}"></td>
-							</tr>
-						</tbody>
-					</table>
+	<div class="main-content">
+		<main>
+				<div class="activity-grid-c">
+					<div class="activity-card">
+						<h3>Listado de citas</h3>
+
+						<table>
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Fecha</th>
+									<th>Mascota</th>
+									<th>Veterinario</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="cit : ${lstCitas}">
+									<td th:text="${cit.id_ficha}"></td>
+									<td th:text="${cit.fech_cita}"></td>
+									<td th:text="${cit.objMascota.Nombre}"></td>
+									<td th:text="${cit.objVet.Apellido}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
 				</div>
-			</div>
-		</section>
+		</main>
 	</div>
 </body>
 </html>

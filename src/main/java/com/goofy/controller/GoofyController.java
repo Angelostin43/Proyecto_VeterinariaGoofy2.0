@@ -43,6 +43,11 @@ public class GoofyController {
 	public String cargarAccesoSistema(Model model) {
 		return "AccesoSistema";
 	}
+	
+	@GetMapping("/ProbandoInfoMed")
+	public String cargarProbandoInfoMed(Model model) {
+		return "ProbandoInfoMed";
+	}
 
 
 	@PostMapping("/login")

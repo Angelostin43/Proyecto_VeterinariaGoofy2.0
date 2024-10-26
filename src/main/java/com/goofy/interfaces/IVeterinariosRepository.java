@@ -2,8 +2,8 @@ package com.goofy.interfaces;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.goofy.model.Veterinarios;
+import com.goofy.model.Veterinario;
 
-public interface IMedicosRepository extends JpaRepository<Veterinarios, Integer> {
+public interface IVeterinariosRepository extends JpaRepository<Veterinario, Integer> {
 
 }

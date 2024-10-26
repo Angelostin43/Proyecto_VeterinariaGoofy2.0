@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.goofy.interfaces.ICitasRepository;
-import com.goofy.interfaces.IMedicosRepository;
+import com.goofy.interfaces.IVeterinariosRepository;
+import com.goofy.model.Veterinario;
 
 @Controller
 public class GoofyController {
@@ -31,11 +35,27 @@ public class GoofyController {
 	}
 
 	@Autowired
-	private IMedicosRepository repoMed;
+	private IVeterinariosRepository repoVet;
 
 	@GetMapping("/InfoMedicos")
 	public String cargarInfoMedicos(Model model) {
-		model.addAttribute("lstMedicos", repoMed.findAll());
+		model.addAttribute("veterinario", new Veterinario());
+		model.addAttribute("lstVets", repoVet.findAll());
+		return "InfoMedicos";
+	}
+	
+	@PostMapping("/grabar")
+	public String grabarInfoMedicos(Model model, @ModelAttribute Veterinario veterinario) {
+		System.out.println(veterinario);
+		repoVet.save(veterinario);
+		return "redirect:/InfoMedicos";
+	}
+	
+	@GetMapping("/editar/{id_veterinario}")
+	public String editar(@PathVariable Integer id_veterinario, Model model) {
+		Veterinario v = repoVet.findById(id_veterinario).get();
+		model.addAttribute("veterinario", v);
+		model.addAttribute("lstVets", repoVet.findAll());
 		return "InfoMedicos";
 	}
 

@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-body {
+/*body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -118,5 +118,5 @@ input:focus {
 .tituloLogin h2 {
     transition: color 0.3s ease;
     font-family: 'Patrick Hand', cursive;
-}
+}*/
 

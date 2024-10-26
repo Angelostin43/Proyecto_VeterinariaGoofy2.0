@@ -2,6 +2,7 @@ package com.goofy.interfaces;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 import com.goofy.model.Duenio;
 
 @Repository

@@ -1,42 +1,27 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Perfil del Dueño</title>
-    <link rel="stylesheet" href="/css/perfil.css">
+<meta charset="UTF-8">
+<title>Perfil</title>
 </head>
 <body>
+<script th:inline="javascript">
+        // Utilizar th:inline para asegurar que se renderice correctamente
+        const usuarioLogueado = /*[[${usuarioLogueado}]]*/ {};
+        console.log('Usuario:', usuarioLogueado);
+        
+        // Almacenar en local storage
+        localStorage.setItem("usuarioLogueado", JSON.stringify(usuarioLogueado));
+    </script>
 
-<h2>Bienvenido, <span th:text="${usuarioLogueado.nombre}">Nombre</span></h2>
+  <h2>Bienvenido, <span th:text="${usuarioLogueado.nombre}">Nombre del Dueño</span></h2>
+  
 
-<form id="perfilForm" method="post" action="/actualizarPerfil">
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" th:value="${usuarioLogueado.nombre}" disabled>
+  <h2>Bienvenido, <span th:text="${usuarioLogueado}">Nombre del Dueño</span></h2>
+<a href="/index.html">Volver</a>
+ 
+   
 
-    <label for="apellido">Apellido:</label>
-    <input type="text" id="apellido" name="apellido" th:value="${usuarioLogueado.apellido}" disabled>
-
-    <label for="telefono">Teléfono:</label>
-    <input type="text" id="telefono" name="telefono" th:value="${usuarioLogueado.telefono}" disabled>
-
-    <label for="correo">Correo:</label>
-    <input type="email" id="correo" name="correo" th:value="${usuarioLogueado.correo}" disabled>
-
-    <button type="button" id="editarBtn">Editar</button>
-    <button type="submit" id="guardarBtn" style="display: none;">Guardar</button>
-</form>
-
-<script>
-    const editarBtn = document.getElementById('editarBtn');
-    const guardarBtn = document.getElementById('guardarBtn');
-    const inputs = document.querySelectorAll('#perfilForm input');
-
-    editarBtn.addEventListener('click', () => {
-        inputs.forEach(input => input.disabled = false);
-        editarBtn.style.display = 'none';
-        guardarBtn.style.display = 'inline';
-    });
-</script>
 
 </body>
 </html>

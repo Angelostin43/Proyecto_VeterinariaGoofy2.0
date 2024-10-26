@@ -14,6 +14,7 @@ import com.goofy.interfaces.IDuenioRepository;
 import com.goofy.interfaces.IMascotaRepository;
 import com.goofy.interfaces.IVeterinariosRepository;
 import com.goofy.model.Duenio;
+import com.goofy.model.Mascota;
 import com.goofy.model.Veterinario;
 
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +31,11 @@ public class GoofyController {
 
 	@Autowired
 	private ICitasRepository repoCit;
+	@Autowired
+	private IMascotaRepository repoMas;
+	
+	@Autowired
+	private IMascotaRepository repoMascota;
 	
 	@GetMapping("/AccesoSistema")
 	public String cargarAccesoSistema(Model model) {
@@ -52,11 +58,11 @@ public class GoofyController {
 
 	    if (usuarioLogueado != null) {
 	        session.setAttribute("usuarioLogueado", usuarioLogueado);
-	        model.addAttribute("usuarioLogueado", usuarioLogueado); // Asegúrate de que se está agregando al modelo
-	        return "Perfil"; // Redirige a la vista Perfil
+	        model.addAttribute("usuarioLogueado", usuarioLogueado); 
+	        return "Perfil"; 
 	    } else {
 	        model.addAttribute("error", "Correo o contraseña incorrectos");
-	        return "AccesoSistema"; // Muestra mensaje de error
+	        return "AccesoSistema"; 
 	    }
 	}
 
@@ -98,16 +104,23 @@ public class GoofyController {
 	}
 
 	@GetMapping("/MascotaRegistro")
-	public String cargarMascotasRegistro() {
+	public String cargarMascotasRegistro(Model model) {
+		model.addAttribute("mascota", new Mascota());
 		return "MascotaRegistro";
 	}
+
+	   @GetMapping("/mascotasLista")
+	    public String listarMascotas(@RequestParam("idDueno") int idDueno, Model model) {
+		    System.out.println("IDDUeño"+idDueno);
+	        List<Mascota> mascotas = repoMas.findByDueño_Id(idDueno); 
+	        model.addAttribute("mascotas", mascotas);
+	        return "MascotaRegistro";
+	    }
 
 	@GetMapping("/Perfil")
 	public String cargarPerfil() {
 		return "Perfil";
 	}
-	@Autowired
-	private IMascotaRepository repoMascota;
 	
 	@PostMapping("/actualizarPerfil")
 	public String actualizarPerfil(@ModelAttribute Duenio dueñoActualizado, HttpSession session) {
@@ -124,5 +137,5 @@ public class GoofyController {
 	    return "redirect:/Perfil";
 	}
 
-
+	
 }

@@ -3,8 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <title>Registrar Mascotas</title>
+<link rel="stylesheet" href="/estilosPlantilla.css">
+<link
+	href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"
+	rel="stylesheet">
 </head>
 <body>
+
+
+    <h2>Listado de Mascotas</h2>
+    	<div class="tabular--wrapper">
+				<div class="table-container">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Nombre</th>
+								<th>Peso</th>
+								<th>Raza</th>
+								<th>Sexo</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="mascota : ${mascotas}">
+								<td th:text="${mascota.id}"></td>
+								<td th:text="${mascota.nombre}"></td>
+								<td th:text="${mascota.peso}"></td>
+								<td th:text="${mascota.raza}"></td>
+								<td th:text="${mascota.sexo}"></td>
+							
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+    <form id="formDueno" action="/mascotasLista" method="get" style="display:none;">
+        <input type="hidden" name="idDueno" id="idDuenoInput">
+    </form>
+
+     <script>
+        const usuarioLogueado = JSON.parse(localStorage.getItem("usuarioLogueado"));
+    
+        if (usuarioLogueado) {
+        	if (localStorage.getItem('formSubmitted') !== 'true') {
+                document.getElementById("idDuenoInput").value = usuarioLogueado.id;
+                document.getElementById("formDueno").submit();
+                localStorage.setItem("formSubmitted", 'true'); // Marcar que el formulario ha sido enviado
+            }
+        } else {
+            console.error("No se encontró el ID del dueño en el localStorage");
+        }
+      
+    </script>
+
+
 <a href="/index.html">Volver</a>
+
+<header th:replace="~{Plantilla.html :: cabecera}"></header>
+	<div class="linea"></div>
+	<section class="section">
+        <h2>Registrar Mascota</h2>
+        <form th:action="@{/registrarMascota}" th:object="${mascota}" method="post">
+            <div>
+                <label>Nombre</label>
+                <input type="text" th:field="*{nombre}" required />
+            </div>
+            <div>
+                <label>Edad</label>
+                <input type="number" th:field="*{edad}" required />
+            </div>
+            <div>
+                <label>Peso</label>
+                <input type="number" step="0.01" th:field="*{peso}" required />
+            </div>
+            <div>
+                <label>Raza</label>
+                <input type="text" th:field="*{raza}" required />
+            </div>
+            <div>
+                <label>Sexo</label>
+                <select th:field="*{sexo}">
+                    <option value="M">Macho</option>
+                    <option value="F">Hembra</option>
+                </select>
+            </div>
+            <button type="submit">Registrar Mascota</button>
+        </form>
+        <p th:text="${mensaje}" style="color:green;"></p>
+        <p th:text="${error}" style="color:red;"></p>
+    </section>
+	<div class="linea"></div>
+	<footer th:replace="~{Plantilla.html :: footer}"></footer>
+
 </body>
 </html>

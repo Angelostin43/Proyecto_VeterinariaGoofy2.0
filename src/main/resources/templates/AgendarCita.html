@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Agendar Cita</title>
-<link rel="stylesheet" href="/estilos.css">
+<link rel="stylesheet" href="/estilosPlantilla.css">
 <link
 	href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"
 	rel="stylesheet">
@@ -15,6 +15,7 @@
 		<div class="titulo">
 			<h2>Agendar Cita</h2>
 		</div>
+		<div id="usuarioLogin"></div>
 		<br>
 		<div>
 			<form th:object="${veterinario}" method="post">
@@ -49,5 +50,14 @@
 	</section>
 	<div class="linea"></div>
 	<footer th:replace="~{Plantilla.html :: footer}"></footer>
+	<script>
+        const usuarioLogueado = JSON.parse(localStorage.getItem("usuarioLogin"));
+        
+        if (usuarioLogueado && usuarioLogueado.nombre) {
+            document.getElementById('usuarioLogin').innerText = 'Bienvenido, ' + usuarioLogueado.nombre;
+        } else {
+            document.getElementById('usuarioLogin').innerText = 'Iniciar Sesion';
+        }
+    </script>
 </body>
 </html>

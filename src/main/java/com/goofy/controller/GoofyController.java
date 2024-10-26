@@ -36,6 +36,9 @@ public class GoofyController {
 	@Autowired
 	private IMascotaRepository repoMas;
 	
+	@Autowired
+	private IMascotaRepository repoMascota;
+	
 	@GetMapping("/AccesoSistema")
 	public String cargarAccesoSistema(Model model) {
 		return "AccesoSistema";
@@ -98,9 +101,11 @@ public class GoofyController {
 	}
 
 	@GetMapping("/MascotaRegistro")
-	public String cargarMascotasRegistro() {
+	public String cargarMascotasRegistro(Model model) {
+		model.addAttribute("mascota", new Mascota());
 		return "MascotaRegistro";
 	}
+
 	   @GetMapping("/mascotasLista")
 	    public String listarMascotas(@RequestParam("idDueno") int idDueno, Model model) {
 		    System.out.println("IDDUeño"+idDueno);
@@ -108,12 +113,11 @@ public class GoofyController {
 	        model.addAttribute("mascotas", mascotas);
 	        return "MascotaRegistro";
 	    }
+
 	@GetMapping("/Perfil")
 	public String cargarPerfil() {
 		return "Perfil";
 	}
-	@Autowired
-	private IMascotaRepository repoMascota;
 	
 	@PostMapping("/actualizarPerfil")
 	public String actualizarPerfil(@ModelAttribute Duenio dueñoActualizado, HttpSession session) {

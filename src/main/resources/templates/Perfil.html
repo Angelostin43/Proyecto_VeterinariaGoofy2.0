@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Perfil</title>
+    <meta charset="UTF-8">
+    <title>Perfil</title>
 </head>
 <body>
-<script th:inline="javascript">
+
+    <script th:inline="javascript">
         const usuarioLogueado = /*[[${usuarioLogueado}]]*/ {};
         console.log('Usuario:', usuarioLogueado);
-        localStorage.setItem("formSubmitted",'false');
-        localStorage.setItem("usuarioLogueado", JSON.stringify(usuarioLogueado));
+        
+        if (usuarioLogueado && Object.keys(usuarioLogueado).length > 0) {
+            localStorage.setItem("usuarioLogin", JSON.stringify(usuarioLogueado));
+        } else {
+            console.warn('No hay información del usuario para guardar.');
+        }
+
     </script>
 
-  <h2>Bienvenido, <span th:text="${usuarioLogueado.nombre}">Nombre del Dueño</span></h2>
-  
-
-  <h2>Bienvenido, <span th:text="${usuarioLogueado}">Nombre del Dueño</span></h2>
-<a href="/index.html">Volver</a>
- 
-   
-
-
+    <h2>Bienvenido, <span th:text="${usuarioLogueado.nombre}">Nombre del Dueño</span></h2>
+    
+    <a href="/index.html">Volver</a>
 </body>
 </html>

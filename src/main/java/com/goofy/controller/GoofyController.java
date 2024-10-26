@@ -15,7 +15,7 @@ import com.goofy.interfaces.ICitasRepository;
 import com.goofy.interfaces.IDuenioRepository;
 import com.goofy.interfaces.IMascotaRepository;
 import com.goofy.interfaces.IVeterinariosRepository;
-import com.goofy.model.Dueño;
+import com.goofy.model.Duenio;
 import com.goofy.model.Veterinario;
 
 import jakarta.servlet.http.HttpSession;
@@ -40,7 +40,7 @@ public class GoofyController {
 
 	@PostMapping("/AccesoSistema")
 	public String leerSesion(@RequestParam String correo, @RequestParam String contraseña, Model model) {
-		Dueño d = repoDue.findByCorreoAndContraseña(correo, contraseña);
+		Duenio d = repoDue.findByCorreoAndContraseña(correo, contraseña);
 		if (d != null) {
 			System.out.println("Funciona");
 			model.addAttribute("mensaje", "Bienvenido");
@@ -103,8 +103,8 @@ public class GoofyController {
 	private IMascotaRepository repoMascota;
 	
 	@PostMapping("/actualizarPerfil")
-	public String actualizarPerfil(@ModelAttribute Dueño dueñoActualizado, HttpSession session) {
-	    Dueño usuarioActual = (Dueño) session.getAttribute("usuarioLogueado");
+	public String actualizarPerfil(@ModelAttribute Duenio dueñoActualizado, HttpSession session) {
+	    Duenio usuarioActual = (Duenio) session.getAttribute("usuarioLogueado");
 	    if (usuarioActual != null) {
 	        usuarioActual.setNombre(dueñoActualizado.getNombre());
 	        usuarioActual.setApellido(dueñoActualizado.getApellido());

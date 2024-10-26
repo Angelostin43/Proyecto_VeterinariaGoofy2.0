@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.goofy.interfaces.ICitasRepository;
 import com.goofy.interfaces.IDuenioRepository;
 import com.goofy.interfaces.IVeterinariosRepository;
-import com.goofy.model.Dueño;
+import com.goofy.model.Duenio;
 import com.goofy.model.Veterinario;
 
 @Controller
@@ -34,7 +34,7 @@ public class GoofyController {
 
 	@PostMapping("/AccesoSistema")
 	public String leerSesion(@RequestParam String correo, @RequestParam String contraseña, Model model) {
-		Dueño d = repoDue.findByCorreoAndContraseña(correo, contraseña);
+		Duenio d = repoDue.findByCorreoAndContraseña(correo, contraseña);
 		if (d != null) {
 			System.out.println("Funciona");
 			model.addAttribute("mensaje", "Bienvenido");

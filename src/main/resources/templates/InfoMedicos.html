@@ -9,58 +9,51 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 <body>
-	<div class="container">
-		<nav th:replace="~{Citas.html :: nav}"></nav>
-
-		<section class="main">
-			<div class="tabular--wrapper">
-				<h3 class="main-title">Registro de cuenta</h3>
-				<form method="post" action="/grabar" th:object="${veterinario}">
-					<div>
-						<input type="hidden" th:field="*{id_veterinario}" /> <label
-							for="InputDni" class="form-label">DNI:</label> <input
-							th:field="*{dni}" type="text" class="form-control" id="InputDni"
-							name="dni">
-
-					</div>
-					<div>
-						<label for="InputGenero" class="form-label">Género:</label> <input
-							th:field="*{genero}" type="text" class="form-control"
-							id="InputGenero" name="genero">
-
-					</div>
-
-					<div>
-						<label for="InputNombre" class="form-label">Nombre:</label> <input
-							th:field="*{nombre}" type="text" class="form-control"
-							id="InputNombre" name="nombre">
-
-					</div>
-					<div class="mb-3">
-						<label for="InputApellido" class="form-label">Apellido:</label> <input
-							th:field="*{apellido}" type="text" class="form-control"
-							id="InputApellido" name="apellido">
-
-					</div>
-					<div class="mb-3">
-						<label for="InputTlf" class="form-label">Teléfono:</label> <input
-							th:field="*{telefono}" type="tel" class="form-control"
-							id="InputTlf" name="telefono">
-
-					</div>
-					<button type="submit" class="btn btn-primary">Registrar</button>
-				</form>
-			</div>
-
-
-			<div class="tabular--wrapper">
-				<h3 class="main-title">Listado de veterinarios</h3>
-				<div class="table-container">
-					<table class="table table-striped">
+	<nav th:replace="~{Citas.html :: nav}"></nav>
+	<div class="main-content">
+		<main>
+			<div class="activity-grid">
+				<div class="activity-card">
+					<h3>Mantenimiento de veterinarios</h3>
+					<form method="post" action="/grabar" th:object="${veterinario}">
+						<div>
+							<input type="hidden" th:field="*{id_veterinario}" /> <label
+								for="InputDni" class="form-label">DNI:</label> <input
+								th:field="*{dni}" type="text" class="form-control" id="InputDni"
+								name="dni">
+						</div>
+						<div>
+							<label for="InputGenero" class="form-label">Género:</label> <input
+								th:field="*{genero}" type="text" class="form-control"
+								id="InputGenero" name="genero">
+						</div>
+						<div>
+							<label for="InputNombre" class="form-label">Nombre:</label> <input
+								th:field="*{nombre}" type="text" class="form-control"
+								id="InputNombre" name="nombre">
+						</div>
+						<div>
+							<label for="InputApellido" class="form-label">Apellido:</label> <input
+								th:field="*{apellido}" type="text" class="form-control"
+								id="InputApellido" name="apellido">
+						</div>
+						<div>
+							<label for="InputTlf" class="form-label">Teléfono:</label> <input
+								th:field="*{telefono}" type="tel" class="form-control"
+								id="InputTlf" name="telefono">
+						</div>
+						<button type="submit" class="btn">Registrar</button>
+					</form>
+				</div>
+				
+				<div class="activity-card">
+					<h3>Listado de veterinarios</h3>
+					<table>
 						<thead>
 							<tr>
 								<th>ID</th>
 								<th>DNI</th>
+								<th>Género</th>
 								<th>Nombre</th>
 								<th>Apellido</th>
 								<th>Teléfono</th>
@@ -71,6 +64,7 @@
 							<tr th:each="med : ${lstVets}">
 								<td th:text="${med.id_veterinario}"></td>
 								<td th:text="${med.dni}"></td>
+								<td th:text="${med.genero}"></td>
 								<td th:text="${med.nombre}"></td>
 								<td th:text="${med.apellido}"></td>
 								<td th:text="${med.telefono}"></td>
@@ -80,8 +74,9 @@
 						</tbody>
 					</table>
 				</div>
+
 			</div>
-		</section>
+		</main>
 	</div>
 </body>
 </html>

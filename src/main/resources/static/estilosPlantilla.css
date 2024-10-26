@@ -202,3 +202,7 @@ input:focus {
     border-image: linear-gradient(to right, #0D47A1, black, #0D47A1) 1; 
     margin: 20px 0;
 }
+
+.hidden {
+    display: none;
+}

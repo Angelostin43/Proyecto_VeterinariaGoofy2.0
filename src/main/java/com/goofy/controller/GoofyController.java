@@ -1,6 +1,5 @@
 package com.goofy.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,11 +52,11 @@ public class GoofyController {
 
 	    if (usuarioLogueado != null) {
 	        session.setAttribute("usuarioLogueado", usuarioLogueado);
-	        model.addAttribute("usuarioLogueado", usuarioLogueado); // Asegúrate de que se está agregando al modelo
-	        return "Perfil"; // Redirige a la vista Perfil
+	        model.addAttribute("usuarioLogueado", usuarioLogueado); 
+	        return "Perfil"; 
 	    } else {
 	        model.addAttribute("error", "Correo o contraseña incorrectos");
-	        return "AccesoSistema"; // Muestra mensaje de error
+	        return "AccesoSistema"; 
 	    }
 	}
 
@@ -104,6 +103,11 @@ public class GoofyController {
 		return "MascotaRegistro";
 	}
 	
+	@PostMapping("/RegistrarMascota")
+	public String registrarMascota(Model model) {
+		return "MascotaRegistro";
+	}
+	
 	@GetMapping("/Perfil")
 	public String cargarPerfil() {
 		return "Perfil";
@@ -123,6 +127,4 @@ public class GoofyController {
 	    }
 	    return "redirect:/Perfil";
 	}
-
-
 }

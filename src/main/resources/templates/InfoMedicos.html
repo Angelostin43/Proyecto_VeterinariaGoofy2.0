@@ -13,48 +13,46 @@
 		<nav th:replace="citas::nav"></nav>
 
 		<section class="main">
-		<div>
-		<h1>Registro de cuenta</h1>
-		<form method="post" action="/grabar" th:object="${veterinario}">
-		<div>
-		<input type="hidden" th:field="*{id_veterinario}" />
+			<div class="tabular--wrapper">
+				<h3 class="main-title">Registro de cuenta</h3>
+				<form method="post" action="/grabar" th:object="${veterinario}">
+					<div>
+						<input type="hidden" th:field="*{id_veterinario}" /> <label
+							for="InputDni" class="form-label">DNI:</label> <input
+							th:field="*{dni}" type="text" class="form-control" id="InputDni"
+							name="dni">
 
-				<label for="InputDni" class="form-label">DNI</label>
-				
-				<input th:field="*{dni}" type="text" class="form-control"
-					id="InputDni" name="dni">
+					</div>
+					<div>
+						<label for="InputGenero" class="form-label">Género:</label> <input
+							th:field="*{genero}" type="text" class="form-control"
+							id="InputGenero" name="genero">
 
+					</div>
+
+					<div>
+						<label for="InputNombre" class="form-label">Nombre:</label> <input
+							th:field="*{nombre}" type="text" class="form-control"
+							id="InputNombre" name="nombre">
+
+					</div>
+					<div class="mb-3">
+						<label for="InputApellido" class="form-label">Apellido:</label> <input
+							th:field="*{apellido}" type="text" class="form-control"
+							id="InputApellido" name="apellido">
+
+					</div>
+					<div class="mb-3">
+						<label for="InputTlf" class="form-label">Teléfono:</label> <input
+							th:field="*{telefono}" type="tel" class="form-control"
+							id="InputTlf" name="telefono">
+
+					</div>
+					<button type="submit" class="btn btn-primary">Registrar</button>
+				</form>
 			</div>
-			<div>
-				<label for="InputGenero" class="form-label">Genero</label>
-				<input th:field="*{genero}" type="text" class="form-control"
-					id="InputGenero" name="genero">
 
-			</div>
-			
-		<div>
-				<label for="InputNombre" class="form-label">Nombre</label>
-				<input th:field="*{nombre}" type="text" class="form-control"
-					id="InputNombre" name="nombre">
 
-			</div>
-			<div class="mb-3">
-				<label for="InputApellido" class="form-label">Apellido</label>
-				<input th:field="*{apellido}" type="text" class="form-control"
-					id="InputApellido" name="apellido">
-
-			</div>
-			<div class="mb-3">
-				<label for="InputTlf" class="form-label">Teléfono</label>
-				<input th:field="*{telefono}" type="tel" class="form-control"
-					id="InputTlf" name="telefono">
-
-			</div>
-			<button type="submit" class="btn btn-primary">Registrar</button>
-		</form>
-	</div>
-		
-		
 			<div class="tabular--wrapper">
 				<h3 class="main-title">Listado de veterinarios</h3>
 				<div class="table-container">
@@ -76,9 +74,8 @@
 								<td th:text="${med.nombre}"></td>
 								<td th:text="${med.apellido}"></td>
 								<td th:text="${med.telefono}"></td>
-								<td>
-							<a th:href="@{/editar/} + ${med.id_veterinario}" class="btn btn-outline-primary">Editar</a>
-							</td>
+								<td><a th:href="@{/editar/} + ${med.id_veterinario}"
+									class="btn">Editar</a></td>
 							</tr>
 						</tbody>
 					</table>

@@ -3,40 +3,104 @@
 <head>
 <meta charset="UTF-8">
 <title>Perfil</title>
+<link rel="stylesheet" href="/styles.css">
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 <body>
-	<div id="usuarioLogin"></div>
-	<h2>
-		Bienvenido, <span th:text="${usuarioLogueado.nombre}">Nombre
-			del Usuario</span>
-	</h2>
+	<nav th:replace="~{Citas.html :: sidebar}"></nav>
+<h3 id="usuarioLogin"></h3>
+	<div class="contenido">
+		<main>
+			<section class="sectionCitas">
+				<div class="registro-container">
+					<h3>Perfil</h3>
+				
+                        <div class="form-group">
+                            <label for="InputDni" class="form-label">DNI</label> 
+				<input disabled="disabled" type="text" class="form-control" id="InputDni" name="dni" >
+                        </div>
+                        <div class="form-group">
+                            <label for="InputGenero" class="form-label">Género</label> 
+                            <input disabled="disabled" type="text" class="form-control" id="InputGenero" name="genero"  >
+                        </div>
+                        <div class="form-group">
+                            <label for="InputNombre" class="form-label">Nombre</label> 
+                            <input disabled="disabled" type="text" class="form-control" id="InputNombre" name="nombre"  >
+                        </div>
+                        <div class="form-group">
+                            <label for="InputApellido" class="form-label">Apellido</label> 
+                          <input disabled="disabled" type="text" class="form-control" id="InputApellido" name="apellido"  >
+                        </div>
+                        <div class="form-group">
+                            <label for="InputTlf" class="form-label">Teléfono</label> 
+                           <input disabled="disabled" type="tel" class="form-control" id="InputTlf" name="telefono"  >
+                        </div>
+                 
+				</div>
 
-	<a href="/index.html">Volver</a>
+				<div class="table-container">
+					<h3 class="main-title">Listado de Mascotas</h3>
+						<table class="table ">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Nombre</th>
+								<th>Peso</th>
+								<th>Raza</th>
+								<th>Sexo</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="mascota : ${mascotas}">
+								<td th:text="${mascota.id}"></td>
+								<td th:text="${mascota.nombre}"></td>
+								<td th:text="${mascota.peso}"></td>
+								<td th:text="${mascota.raza}"></td>
+								<td th:text="${mascota.sexo}"></td>
+							
+							</tr>
+						</tbody>
+					</table>
 
+				</div>
+				   
+				
+			</section>
+			 <form id="formDueno" action="/mascotasLista" method="get" style="display:none;">
+        <input type="hidden" name="idDueno" id="idDuenoInput">
+        
+    </form>
+		</main>
+	</div>
+		<script th:inline="javascript">
+	
+        // Recuperar el usuario del Local Storage
+        const usuarioGuardado = JSON.parse(localStorage.getItem("usuarioLogin"));
+       const entrada= localStorage.getItem("perfil");
+        if (usuarioGuardado && usuarioGuardado.nombre ) {
+        	 document.getElementById('InputDni').value = usuarioGuardado.dni;
+             document.getElementById('InputGenero').value = usuarioGuardado.genero;
+             document.getElementById('InputNombre').value = usuarioGuardado.nombre;
+             document.getElementById('InputApellido').value = usuarioGuardado.apellido;
+             document.getElementById('InputTlf').value = usuarioGuardado.telefono;
+        if( entrada == 'false'){
+                  document.getElementById('usuarioLogin').innerText = `Bienvenido, ${usuarioGuardado.nombre}`;
+                  console.log('Logeo exitoso:', usuarioGuardado);
+                localStorage.setItem("perfil",'true');
+                  document.getElementById("idDuenoInput").value = usuarioGuardado.id; 
 
-	<script th:inline="javascript">
-		const usuarioLogueado = /*[[${usuarioLogueado}]]*/{};
-		console.log('Usuario:', usuarioLogueado);
+                  document.getElementById("formDueno").submit();
 
-		// Guardamos el usuario en localStorage si tiene datos
-		if (usuarioLogueado && Object.keys(usuarioLogueado).length > 0) {
-			localStorage.setItem("usuarioLogin", JSON
-					.stringify(usuarioLogueado));
-			console.log("Usuario guardado en localStorage:", usuarioLogueado);
-		} else {
-			console.warn('No hay información del usuario para guardar.');
-		}
-
-		const usuarioGuardado = JSON
-				.parse(localStorage.getItem("usuarioLogin"));
-
-		if (usuarioGuardado && usuarioGuardado.nombre) {
-			document.getElementById('usuarioLogin').innerText = `Bienvenido, ${usuarioGuardado.nombre}`;
-			console.log('Logeo exitoso:', usuarioGuardado.nombre);
-		} else {
-			document.getElementById('usuarioLogin').innerText = 'Iniciar Sesión';
-			console.log('Error: Usuario no logueado');
-		}
-	</script>
+        
+        }
+        } else {
+            document.getElementById('usuarioLogin').innerText = 'Iniciar Sesión';
+            console.log('Error: Usuario no logueado');
+        }
+      
+    </script>
+	
 </body>
 </html>

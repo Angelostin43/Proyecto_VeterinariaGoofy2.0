@@ -18,7 +18,6 @@ public class Mascota {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_mascota")
     private int id;
-    
     private int Edad;
     private double Peso;
     private String Nombre;

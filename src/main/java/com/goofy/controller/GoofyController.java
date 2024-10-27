@@ -32,11 +32,10 @@ public class GoofyController {
 
 	@Autowired
 	private ICitasRepository repoCit;
+	
 	@Autowired
 	private IMascotaRepository repoMas;
 
-	@Autowired
-	private IMascotaRepository repoMascota;
 
 	@GetMapping("/AccesoSistema")
 	public String cargarAccesoSistema(Model model) {
@@ -57,7 +56,7 @@ public class GoofyController {
 		if (usuarioLogueado != null) {
 			session.setAttribute("usuarioLogueado", usuarioLogueado);
 			model.addAttribute("usuarioLogueado", usuarioLogueado);
-			return "Perfil";
+			return "Nosotros";
 		} else {
 			model.addAttribute("error", "Correo o contraseña incorrectos");
 			return "AccesoSistema";
@@ -65,10 +64,12 @@ public class GoofyController {
 	}
 
 	@GetMapping("/AgendarCita")
-	public String cargarAgendarCita(Model model) {
-		model.addAttribute("veterinario", new Veterinario());
-		model.addAttribute("lstVeterinarios", repoVet.findAll());
-		return "AgendarCita";
+	public String cargarAgendarCita(@RequestParam("idDueno") int idDueno, Model model) {
+	    model.addAttribute("veterinario", new Veterinario());
+	    model.addAttribute("lstVeterinarios", repoVet.findAll());
+	    List<Mascota> mascotas = repoMas.findByDueño_Id(idDueno);
+	    model.addAttribute("mascotas", mascotas); 
+	    return "AgendarCita"; 
 	}
 
 	@GetMapping("/Citas")
@@ -118,15 +119,6 @@ public class GoofyController {
 	    }
 	}
 
-
-	@GetMapping("/mascotasLista")
-	public String listarMascotas(@RequestParam("idDueno") int idDueno, Model model) {
-		System.out.println("IDDUeño" + idDueno);
-		List<Mascota> mascotas = repoMas.findByDueño_Id(idDueno);
-		model.addAttribute("mascotas", mascotas);
-		return "MascotaRegistro";
-	}
-
 	@GetMapping("/Perfil")
 	public String cargarPerfil() {
 		return "Perfil";
@@ -145,6 +137,10 @@ public class GoofyController {
 			session.setAttribute("usuarioLogueado", usuarioActual);
 		}
 		return "redirect:/Perfil";
+	}
+	@GetMapping("/Nosotros")
+	public String cargarNosotros(Model model) {
+		return "Nosotros";
 	}
 
 }

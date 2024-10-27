@@ -43,24 +43,9 @@ public class GoofyController {
 		return "AccesoSistema";
 	}
 
-	@GetMapping("/RegistrarUsuario")
-	public String cargarRegistrarUsuario(Model model) {
-		model.addAttribute("duenio", new Duenio());
-		return "RegistrarUsuario";
-	}
-	
-	@PostMapping("/registrar")
-	public String leerRegistrar(@ModelAttribute Duenio duenio, Model model) {
-		System.out.println(duenio);
-		try {
-			repoDue.save(duenio);
-			model.addAttribute("mensaje", "Registro OK");
-			model.addAttribute("cssmensaje", "alert alert-success");
-		} catch (Exception e) {
-			model.addAttribute("mensaje", "Error al registrar" + e.getMessage());
-			model.addAttribute("cssmensaje", "alert alert-success");
-		}
-		return "RegistrarUsuario";
+	@GetMapping("/ProbandoInfoMed")
+	public String cargarProbandoInfoMed(Model model) {
+		return "ProbandoInfoMed";
 	}
 
 	@PostMapping("/login")
@@ -72,7 +57,7 @@ public class GoofyController {
 		if (usuarioLogueado != null) {
 			session.setAttribute("usuarioLogueado", usuarioLogueado);
 			model.addAttribute("usuarioLogueado", usuarioLogueado);
-			return "Perfil";
+			return "Nosotros";
 		} else {
 			model.addAttribute("error", "Correo o contraseña incorrectos");
 			return "AccesoSistema";
@@ -151,6 +136,10 @@ public class GoofyController {
 			session.setAttribute("usuarioLogueado", usuarioActual);
 		}
 		return "redirect:/Perfil";
+	}
+	@GetMapping("/Nosotros")
+	public String cargarNosotros(Model model) {
+		return "Nosotros";
 	}
 
 }

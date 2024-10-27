@@ -73,7 +73,7 @@ public class GoofyController {
 
 	@GetMapping("/AgendarCita")
 	public String cargarAgendarCita(Model model) {
-		model.addAttribute("cita", new Citas());
+	    model.addAttribute("cita", new Citas());
 		model.addAttribute("veterinario", new Veterinario());
 		model.addAttribute("lstVeterinarios", repoVet.findAll());
 		return "AgendarCita";
@@ -156,9 +156,28 @@ public class GoofyController {
 		}
 		return "redirect:/Perfil";
 	}
+	
 	@GetMapping("/Nosotros")
 	public String cargarNosotros(Model model) {
 		return "Nosotros";
+	}
+	
+	@GetMapping("/mascotas/{duenioId}")
+	public ResponseEntity<List<Mascota>> obtenerMascotasPorDuenio(@PathVariable int duenioId) {
+	    List<Mascota> mascotas = repoMas.findByDueño_Id(duenioId);
+	    return ResponseEntity.ok(mascotas);
+	}
+
+	@PostMapping("/RegistrarCita")
+	public String registrarMascota(@ModelAttribute("cita") Citas cita, Model model) {
+        try{  repoCit.save(cita);
+        model.addAttribute("mensaje", "Cita registrada correctamente.");
+        }
+        catch (Error e){
+        	 model.addAttribute("mensaje", "No se pudo registrar Cita.");
+        }
+	   
+	    return "AgendarCita"; 
 	}
 
 	@GetMapping("/RegistrarUsuario")
@@ -178,18 +197,5 @@ public class GoofyController {
 			model.addAttribute("cssmensaje", "alert alert-success");
 		}
 		return "RegistrarUsuario";
-	}
-	
-	@GetMapping("/mascotas/{duenioId}")
-	public ResponseEntity<List<Mascota>> obtenerMascotasPorDuenio(@PathVariable int duenioId) {
-	    List<Mascota> mascotas = repoMas.findByDueño_Id(duenioId);
-	    return ResponseEntity.ok(mascotas);
-	}
-
-	@PostMapping("/RegistrarCita")
-	public String registrarMascota(@ModelAttribute("cita") Citas cita, Model model) {
-		System.out.println( "CITA"+cita);
-	    repoCit.save(cita);  
-	    return "AgendarCita"; 
 	}
 }

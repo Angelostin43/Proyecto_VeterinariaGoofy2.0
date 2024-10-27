@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Nosotros</title>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+<body>
+	<nav th:replace="~{Citas.html :: nav}"></nav>
+	
+	  <div class="contenido">
+	    <div class="logo-containe" >
+	  <a href="#" class="imgLogoPer"> 
+				<img class="imgLogoPer" src="/img/PerfilLogo.png" />
+			</a>
+			</div>
+			<br>
+        <div class="boxes">
+            <div class="box mission">
+                <h2>Misión</h2>
+                <p>Nuestra misión es proporcionar un servicio veterinario de calidad, asegurando el bienestar de las mascotas y la satisfacción de sus dueños.</p>
+            </div>
+            
+            <div class="box vision">
+                <h2>Visión</h2>
+                <p>Ser la clínica veterinaria de referencia en la región, comprometidos con la salud y el cuidado responsable de cada mascota que atendemos.</p>
+            </div>
+        </div>
+
+        <div class="box created-by">
+            <p>Equipo de desarrollo: Angelo Pool Llanos Querol, Angela Jaramillo  y Angie Tamara Marquina Salinas.</p>
+        </div>
+    </div>
+   <script th:inline="javascript">
+		const usuarioLogueado = /*[[${usuarioLogueado}]]*/{};
+
+		// Guardamos el usuario en localStorage si tiene datos
+		if (usuarioLogueado && Object.keys(usuarioLogueado).length > 0) {
+			localStorage.setItem("usuarioLogueado", JSON
+					.stringify(usuarioLogueado));
+		} else {
+			console.warn('No hay información del usuario para guardar.');
+		}
+
+	</script>
+</body>
+</html>

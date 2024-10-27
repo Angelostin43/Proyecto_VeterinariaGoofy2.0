@@ -160,8 +160,13 @@ public class GoofyController {
 
 	@PostMapping("/RegistrarCita")
 	public String registrarMascota(@ModelAttribute("cita") Citas cita, Model model) {
-		System.out.println( "CITA"+cita);
-	    repoCit.save(cita);  
+        try{  repoCit.save(cita);
+        model.addAttribute("mensaje", "Cita registrada correctamente.");
+        }
+        catch (Error e){
+        	 model.addAttribute("mensaje", "No se pudo registrar Cita.");
+        }
+	   
 	    return "AgendarCita"; 
 	}
 

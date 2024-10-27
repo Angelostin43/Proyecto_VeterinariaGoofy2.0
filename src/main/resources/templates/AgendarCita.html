@@ -43,7 +43,11 @@
 
                         <button type="submit" class="btn btn-submit">Agendar cita</button>
                     </form>
+                     <div th:if="${mensaje}" class="alert">
+                        <p th:text="${mensaje}"></p>
+                    </div>
                 </div>
+               
             </section>
         </main>
     </div>

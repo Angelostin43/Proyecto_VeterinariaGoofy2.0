@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Perfil</title>
+<meta charset="UTF-8">
+<title>Perfil</title>
 </head>
 <body>
-    <!-- Este es el elemento donde se mostrará el nombre del usuario logueado -->
-    <div id="usuarioLogin"></div>
-    <h2>
-        Bienvenido, <span th:text="${usuarioLogueado.nombre}">Nombre del Usuario</span>
-    </h2>
+	<div id="usuarioLogin"></div>
+	<h2>
+		Bienvenido, <span th:text="${usuarioLogueado.nombre}">Nombre
+			del Usuario</span>
+	</h2>
 
-    <a href="/index.html">Volver</a>
+	<a href="/index.html">Volver</a>
 
-    <!-- Script para almacenar y mostrar el usuario logueado -->
-    <script th:inline="javascript">
-        const usuarioLogueado = /*[[${usuarioLogueado}]]*/ {};
-        console.log('Usuario:', usuarioLogueado);
 
-        // Guardamos el usuario en localStorage si tiene datos
-        if (usuarioLogueado && Object.keys(usuarioLogueado).length > 0) {
-            localStorage.setItem("usuarioLogin", JSON.stringify(usuarioLogueado));
-            console.log("Usuario guardado en localStorage:", usuarioLogueado);
-        } else {
-            console.warn('No hay información del usuario para guardar.');
-        }
+	<script th:inline="javascript">
+		const usuarioLogueado = /*[[${usuarioLogueado}]]*/{};
+		console.log('Usuario:', usuarioLogueado);
 
-        // Recuperamos y mostramos el nombre del usuario
-        const usuarioGuardado = JSON.parse(localStorage.getItem("usuarioLogin"));
-        if (usuarioGuardado && usuarioGuardado.nombre) {
-            document.getElementById('usuarioLogin').innerText = `Bienvenido, ${usuarioGuardado.nombre}`;
-            console.log('Logeo exitoso:', usuarioGuardado.nombre);
-        } else {
-            document.getElementById('usuarioLogin').innerText = 'Iniciar Sesión';
-            console.log('Error: Usuario no logueado');
-        }
-    </script>
+		// Guardamos el usuario en localStorage si tiene datos
+		if (usuarioLogueado && Object.keys(usuarioLogueado).length > 0) {
+			localStorage.setItem("usuarioLogin", JSON
+					.stringify(usuarioLogueado));
+			console.log("Usuario guardado en localStorage:", usuarioLogueado);
+		} else {
+			console.warn('No hay información del usuario para guardar.');
+		}
+
+		const usuarioGuardado = JSON
+				.parse(localStorage.getItem("usuarioLogin"));
+
+		if (usuarioGuardado && usuarioGuardado.nombre) {
+			document.getElementById('usuarioLogin').innerText = `Bienvenido, ${usuarioGuardado.nombre}`;
+			console.log('Logeo exitoso:', usuarioGuardado.nombre);
+		} else {
+			document.getElementById('usuarioLogin').innerText = 'Iniciar Sesión';
+			console.log('Error: Usuario no logueado');
+		}
+	</script>
 </body>
 </html>

@@ -5,63 +5,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Citas</title>
 <link rel="stylesheet" href="/styles.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 <body>
-	<div class="container">
-		<nav th:fragment="nav">
-			<ul>
-				<li><a href="#" class="logo"> <img
-						src="img/VeterinariaGoofyLogo.png" alt="">
-				</a></li>
-				<li><a href="/Perfil"> <i class="fas fa-home"></i> <span
-						class="nav-item">Home</span>
-				</a></li>
-				<li><a href="/AgendarCita"> <i class="fas fa-paste"></i> <span
-						class="nav-item">Agendar Cita</span>
-				</a></li>
-				<li><a href="/Citas"> <i class="fas fa-heart"></i> <span
-						class="nav-item">Citas</span>
-				</a></li>
-				<li><a href="/InfoMedicos"> <i class="fas fa-stethoscope"></i>
-						<span class="nav-item">Veterinarios</span>
-				</a></li>
-				<li><a href="/MascotaRegistro"> <i class="fas fa-paw"></i>
-						<span class="nav-item">Registrar mascota</span>
-				</a></li>
-				<li><a href="/AccesoSistema" class="logout"> <i
-						class="fas fa-sign-out-alt"></i> <span class="nav-item">Log
-							out</span>
-				</a></li>
-			</ul>
-		</nav>
-
-		<section class="main">			
-			<div class="tabular--wrapper">
-			<h3 class="main-title">Listado de citas</h3>
-				<div class="table-container">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>Fecha</th>
-								<th>Mascota</th>
-								<th>Veterinario</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="cit : ${lstCitas}">
-								<td th:text="${cit.id_ficha}"></td>
-								<td th:text="${cit.fech_cita}"></td>
-								<td th:text="${cit.objMascota.Nombre}"></td>
-								<td th:text="${cit.objVet.Apellido}"></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</section>
+	<nav th:fragment="sidebar" class="sidebar">
+		<ul>
+		<img src="/img/ManchaDorada.png" class="mancha" />
+			<li><a href="#" class="logo"> <img src="/img/VeterinariaGoofyLogo.png"></a></li>
+			<li><a href="/Perfil" class="textSesion"> <i class="fas fa-user"></i> <span>Perfil</span></a></li>
+			<li><a href="/AgendarCita" class="textSesion"> <i class="fas fa-paste"></i> <span>Agendar Cita</span></a></li>
+			<li><a href="/Citas" class="textSesion"> <i class="fas fa-heart"></i> <span>Citas</span></a></li>
+			<li><a href="/InfoMedicos" class="textSesion"> <i class="fas fa-stethoscope"></i> <span>Veterinarios</span></a></li>
+			<li><a href="/MascotaRegistro" class="textSesion"> <i class="fas fa-paw"></i> <span>Registrar Mascota</span></a></li>
+			<li><a href="#" class="imgLogoPer"> 
+				<img class="imgLogoPer" src="/img/PerfilLogo.png" />
+			</a></li>
+			<li><a href="/AccesoSistema" class="textSesion logout"> <i class="fas fa-sign-out-alt"></i> <span>Log Out</span></a></li>
+		</ul>
+	</nav>
+	<div class="contenido">
+		<main>
+			<section class="sectionCitas">
+				<h3>Listado de Citas</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Fecha</th>
+							<th>Mascota</th>
+							<th>Veterinario</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cit : ${lstCitas}">
+							<td th:text="${cit.id_ficha}"></td>
+							<td th:text="${cit.fech_cita}"></td>
+							<td th:text="${cit.objMascota.Nombre}"></td>
+							<td th:text="${cit.objVet.Apellido}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+		</main>
 	</div>
 </body>
 </html>

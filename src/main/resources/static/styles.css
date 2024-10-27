@@ -24,7 +24,7 @@ main {
 }
 
 .registro-main{
-	margin-top: 60px;
+	margin: 60px;
 	display: flex;
     justify-content: center;
 }
@@ -76,6 +76,14 @@ th, td {
 
 .logo img {
 	max-width: 100%;
+}
+
+.logo-registro{
+	text-align: center;
+	margin-left: -15px;
+	position: relative;
+	z-index: 1;
+	max-width: 25rem;
 }
 
 .textSesion {
@@ -302,3 +310,6 @@ td {
     color: white; 
 }
 
+.registro-container p{
+	margin-top: 1rem;
+}

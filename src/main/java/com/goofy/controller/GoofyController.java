@@ -43,9 +43,24 @@ public class GoofyController {
 		return "AccesoSistema";
 	}
 
-	@GetMapping("/ProbandoInfoMed")
-	public String cargarProbandoInfoMed(Model model) {
-		return "ProbandoInfoMed";
+	@GetMapping("/RegistrarUsuario")
+	public String cargarRegistrarUsuario(Model model) {
+		model.addAttribute("duenio", new Duenio());
+		return "RegistrarUsuario";
+	}
+	
+	@PostMapping("/registrar")
+	public String leerRegistrar(@ModelAttribute Duenio duenio, Model model) {
+		System.out.println(duenio);
+		try {
+			repoDue.save(duenio);
+			model.addAttribute("mensaje", "Registro OK");
+			model.addAttribute("cssmensaje", "alert alert-success");
+		} catch (Exception e) {
+			model.addAttribute("mensaje", "Error al registrar" + e.getMessage());
+			model.addAttribute("cssmensaje", "alert alert-success");
+		}
+		return "RegistrarUsuario";
 	}
 
 	@PostMapping("/login")

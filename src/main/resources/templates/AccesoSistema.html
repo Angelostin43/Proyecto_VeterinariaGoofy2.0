@@ -3,53 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <title>Acceso al sistema</title>
-<link rel="stylesheet" href="/estilosLogin.css">
-<link
-	href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"
-	rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 <body>
-
-	<a href="javascript:history.back();"> <img class="flechaAzul"
-		src="img/flechaAzul.png" /></a>
-	<div class="content">
-		<section class="sectionLogin">
+<main class="registro-main">
+			<section class="sectionLogin">
+			<div class="registro-container">
 			<div class="tituloLogin">
-				<img class="imgLogo" src="/img/VeterinariaGoofyLogo.png" />
-				<h2>Iniciar sesión</h2>
+				<img class="logo-registro" src="/img/VeterinariaGoofyLogo.png" />
 			</div>
-			<br>
-			<div>
-				<form method="post" action="/login">
-					<div>
-						<label>Correo:</label> <input type="email" name="correo" required>
-					</div>
-					<div>
-						<label>Contraseña:</label> <input type="password"
-							name="contraseña" required>
-					</div>
-					<div>
-						<button class="boton-ingresar" type="submit">Ingresar</button>
-						<button id="boton-cerrar" class="boton-ingresar">Cerrar Sesión</button>
-					</div>
-				</form>
-			</div>
-		</section>
-		<div class="linea"></div>
-		<footer class="footerLogin">
-			<div class="contactos">
-				<h3 id="conttit">Contacto</h3>
-				<div class="contacto-item">
-					<img class="icono" src="img/telefono.png" alt="Teléfono" />
-					<p>Numero Telefono:</p>
+					<h3>Registrar usuario</h3>
+					<form method="post" action="/login">	
+						<div class="form-group">
+							<label for="InputEmail" class="form-label">Correo</label> <input
+								type="email" required class="form-control"
+								id="InputEmail" name="correo" placeholder="Ingrese correo">
+						</div>
+						<div class="form-group">
+							<label for="InputPass" class="form-label">Contraseña</label> <input
+								type="password" required class="form-control"
+								id="InputPass" name="contraseña" placeholder="Ingrese contraseña">
+						</div>
+						<button type="submit" class="btn btn-submit">Ingresar</button>
+					</form>
+					<div th:class="${cssmensaje}" role="alert" th:text="${mensaje}"></div>
+					<p>Para registrar su cuenta, pulse <a href="/RegistrarUsuario">aquí</a>
 				</div>
-				<div class="contacto-item">
-					<img class="icono" src="img/correo.png" alt="Correo Electrónico" />
-					<p>Correo Electronico:</p>
-				</div>
-			</div>
-		</footer>
-	</div>
+			</section>
+			</main>
 	<script>
 		document.getElementById('boton-cerrar').addEventListener('click',
 				function() {

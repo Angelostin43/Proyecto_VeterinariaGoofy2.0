@@ -16,7 +16,7 @@ public class Duenio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_dueño")
 	private int id;
-	private int dni;
+	private String dni;
 	private String genero;
 	private String nombre;
 	private String apellido;

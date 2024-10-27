@@ -1,8 +1,10 @@
 package com.goofy.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import com.goofy.interfaces.ICitasRepository;
 import com.goofy.interfaces.IDuenioRepository;
 import com.goofy.interfaces.IMascotaRepository;
 import com.goofy.interfaces.IVeterinariosRepository;
+import com.goofy.model.Citas;
 import com.goofy.model.Duenio;
 import com.goofy.model.Mascota;
 import com.goofy.model.Veterinario;
@@ -36,7 +39,12 @@ public class GoofyController {
 	@Autowired
 	private IMascotaRepository repoMas;
 
-
+	
+	@GetMapping("/")
+	public String principalPag() {
+		return "redirect:/AccesoSistema";
+	}
+	
 	@GetMapping("/AccesoSistema")
 	public String cargarAccesoSistema(Model model) {
 		return "AccesoSistema";
@@ -64,12 +72,11 @@ public class GoofyController {
 	}
 
 	@GetMapping("/AgendarCita")
-	public String cargarAgendarCita(@RequestParam("idDueno") int idDueno, Model model) {
-	    model.addAttribute("veterinario", new Veterinario());
-	    model.addAttribute("lstVeterinarios", repoVet.findAll());
-	    List<Mascota> mascotas = repoMas.findByDueño_Id(idDueno);
-	    model.addAttribute("mascotas", mascotas); 
-	    return "AgendarCita"; 
+	public String cargarAgendarCita(Model model) {
+		model.addAttribute("cita", new Citas());
+		model.addAttribute("veterinario", new Veterinario());
+		model.addAttribute("lstVeterinarios", repoVet.findAll());
+		return "AgendarCita";
 	}
 
 	@GetMapping("/Citas")
@@ -107,20 +114,31 @@ public class GoofyController {
 	}
 
 	@PostMapping("/RegistrarMascota")
-	public String registrarMascota(@ModelAttribute Mascota mascota, HttpSession session, Model model) {
-	    Duenio dueño = (Duenio) session.getAttribute("usuarioLogueado");
+	public String registrarMascota(@ModelAttribute("mascota") Mascota mascota, Model model) {
+	    int idDuenio = mascota.getDueño().getId(); 
+	    Duenio dueño = repoDue.findById(idDuenio).orElse(null); 
+
 	    if (dueño != null) {
-	        mascota.setDueño(dueño);  
-	        repoMas.save(mascota);
-	        return "redirect:/MascotaRegistro"; 
+	        mascota.setDueño(dueño); 
+	        repoMas.save(mascota); 
+	        model.addAttribute("mensaje", "Mascota registrada correctamente.");
 	    } else {
-	        model.addAttribute("error", "Debes iniciar sesión para registrar una mascota.");
-	        return "MascotaRegistro"; 
+	        model.addAttribute("error", "Dueño no encontrado.");
 	    }
+
+	    return "MascotaRegistro";
+	}
+
+
+	@GetMapping("/mascotasLista")
+	public String listarMascotas(@RequestParam("idDueno") Integer idDueno, Model model) {
+		List<Mascota> mascotas = repoMas.findByDueño_Id(idDueno);
+		model.addAttribute("mascotas", mascotas);
+		return "Perfil";
 	}
 
 	@GetMapping("/Perfil")
-	public String cargarPerfil() {
+	public String cargarPerfil( HttpSession session,Model model) {
 		return "Perfil";
 	}
 
@@ -143,4 +161,35 @@ public class GoofyController {
 		return "Nosotros";
 	}
 
+	@GetMapping("/RegistrarUsuario")
+	public String cargarRegistrarUsuario(Model model) {
+		model.addAttribute("duenio", new Duenio());
+		return "RegistrarUsuario";
+	}
+	
+	@PostMapping("/registrar")
+	public String leerRegistrar(@ModelAttribute Duenio duenio, Model model) {
+		try {
+			repoDue.save(duenio);
+			model.addAttribute("mensaje", "Registro realizado");
+			model.addAttribute("cssmensaje", "alert alert-success");
+		} catch (Exception e) {
+			model.addAttribute("mensaje", "Error al registrar" + e.getMessage());
+			model.addAttribute("cssmensaje", "alert alert-success");
+		}
+		return "RegistrarUsuario";
+	}
+	
+	@GetMapping("/mascotas/{duenioId}")
+	public ResponseEntity<List<Mascota>> obtenerMascotasPorDuenio(@PathVariable int duenioId) {
+	    List<Mascota> mascotas = repoMas.findByDueño_Id(duenioId);
+	    return ResponseEntity.ok(mascotas);
+	}
+
+	@PostMapping("/RegistrarCita")
+	public String registrarMascota(@ModelAttribute("cita") Citas cita, Model model) {
+		System.out.println( "CITA"+cita);
+	    repoCit.save(cita);  
+	    return "AgendarCita"; 
+	}
 }

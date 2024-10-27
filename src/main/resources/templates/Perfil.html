@@ -3,26 +3,99 @@
 <head>
 <meta charset="UTF-8">
 <title>Perfil</title>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 <body>
+	<nav th:replace="~{Citas.html :: sidebar}"></nav>
+	<h3 id="usuarioLogin"></h3>
+	<div class="contenido">
+		<main>
+			<section class="sectionCitas">
+				<div class="registro-container">
+					<h3>Perfil</h3>
+
+					<div class="form-group">
+						<label for="InputDni" class="form-label">DNI</label> <input
+							disabled="disabled" type="text" class="form-control"
+							id="InputDni" name="dni">
+					</div>
+					<div class="form-group">
+						<label for="InputGenero" class="form-label">Género</label> <input
+							disabled="disabled" type="text" class="form-control"
+							id="InputGenero" name="genero">
+					</div>
+					<div class="form-group">
+						<label for="InputNombre" class="form-label">Nombre</label> <input
+							disabled="disabled" type="text" class="form-control"
+							id="InputNombre" name="nombre">
+					</div>
+					<div class="form-group">
+						<label for="InputApellido" class="form-label">Apellido</label> <input
+							disabled="disabled" type="text" class="form-control"
+							id="InputApellido" name="apellido">
+					</div>
+					<div class="form-group">
+						<label for="InputTlf" class="form-label">Teléfono</label> <input
+							disabled="disabled" type="tel" class="form-control" id="InputTlf"
+							name="telefono">
+					</div>
+				</div>
+				<div class="table-container">
+					<h3 class="main-title">Tus Mascotas</h3>
+					<div class="mascotas-container">
+						<div class="card" style="width: 18rem;"
+							th:each="mascota : ${mascotas}">
+							<img class="card-img-top"
+								th:src="${mascota.Sexo == 'M' ? '/img/Macho.png' : '/img/Hembra.png'}"
+								alt="Imagen de la mascota">
+							<div class="card-body">
+								<p class="card-text">
+									<i
+										th:class="${mascota.Sexo == 'M' ? 'fas fa-mars' : 'fas fa-venus'}"
+										style="margin-left: 5px;"></i> <span
+										th:text="${mascota.nombre}"></span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</section>
+			<form id="formDueno" action="/mascotasLista" method="get"
+				style="display: none;">
+				<input type="hidden" name="idDueno" id="idDuenoInput">
+			</form>
+		</main>
+	</div>
 	<script th:inline="javascript">
-		/*<![CDATA[*/
-		const usuarioLogueado = /*[[${usuarioLogueado != null ? usuarioLogueado : '{}'}]]*/{};
-		console.log('Usuario:', usuarioLogueado);
+		const usuarioGuardado = JSON
+				.parse(localStorage.getItem("usuarioLogin"));
+		const entrada = localStorage.getItem("perfil");
+		if (usuarioGuardado && usuarioGuardado.nombre) {
+			document.getElementById('InputDni').value = usuarioGuardado.dni;
+			document.getElementById('InputGenero').value = usuarioGuardado.genero;
+			document.getElementById('InputNombre').value = usuarioGuardado.nombre;
+			document.getElementById('InputApellido').value = usuarioGuardado.apellido;
+			document.getElementById('InputTlf').value = usuarioGuardado.telefono;
+			if (entrada == 'false') {
+				document.getElementById('usuarioLogin').innerText = `Bienvenido, ${usuarioGuardado.nombre}`;
+				console.log('Logeo exitoso:', usuarioGuardado);
+				localStorage.setItem("perfil", 'true');
+				document.getElementById("idDuenoInput").value = usuarioGuardado.id;
 
-		if (usuarioLogueado && Object.keys(usuarioLogueado).length > 0) {
-			localStorage.setItem("usuarioLogin", JSON
-					.stringify(usuarioLogueado));
+				document.getElementById("formDueno").submit();
+
+			}
 		} else {
-			console.warn('No hay información del usuario para guardar.');
+			document.getElementById('usuarioLogin').innerText = 'Iniciar Sesión';
+			console.log('Error: Usuario no logueado');
 		}
-		/*]]>*/
 	</script>
-	<h2>
-		Bienvenido, <span th:text="${usuarioLogueado.nombre}">Nombre
-			del Dueño</span>
-	</h2>
-
-	<a href="/index.html">Volver</a>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		crossorigin="anonymous"></script>
 </body>
 </html>

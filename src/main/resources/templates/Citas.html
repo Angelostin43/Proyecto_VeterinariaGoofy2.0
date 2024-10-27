@@ -12,16 +12,23 @@
 		<ul>
 		<img src="/img/ManchaDorada.png" class="mancha" />
 			<li><a href="#" class="logo"> <img src="/img/VeterinariaGoofyLogo.png"></a></li>
-			<li><a href="/Perfil" class="textSesion"> <i class="fas fa-user"></i> <span>Perfil</span></a></li>
-			<li><a href="/AgendarCita" class="textSesion"> <i class="fas fa-paste"></i> <span>Agendar Cita</span></a></li>
-			<li><a href="/Citas" class="textSesion"> <i class="fas fa-heart"></i> <span>Citas</span></a></li>
-			<li><a href="/InfoMedicos" class="textSesion"> <i class="fas fa-stethoscope"></i> <span>Veterinarios</span></a></li>
-			<li><a href="/MascotaRegistro" class="textSesion"> <i class="fas fa-paw"></i> <span>Registrar Mascota</span></a></li>
+			<li><a href="/Perfil" class="textSesion" onclick="hideProfile();"> <i class="fas fa-user"></i> <span>Perfil</span></a></li>
+			<li><a href="/AgendarCita" class="textSesion" onclick="hideProfile();"> <i class="fas fa-paste"></i> <span>Agendar Cita</span></a></li>
+			<li><a href="/Citas" class="textSesion" onclick="hideProfile();"> <i class="fas fa-heart"></i> <span>Citas</span></a></li>
+			<li><a href="/InfoMedicos" class="textSesion" onclick="hideProfile();"> <i class="fas fa-stethoscope"></i> <span>Veterinarios</span></a></li>
+			<li><a href="/MascotaRegistro" class="textSesion"onclick="hideProfile();"> <i class="fas fa-paw"></i> <span>Registrar Mascota</span></a></li>
 			<li><a href="#" class="imgLogoPer"> 
 				<img class="imgLogoPer" src="/img/PerfilLogo.png" />
 			</a></li>
 			<li><a href="/AccesoSistema" class="textSesion logout"> <i class="fas fa-sign-out-alt"></i> <span>Log Out</span></a></li>
 		</ul>
+		<script>
+		  function hideProfile() {
+              // Establece la variable perfil en localStorage a false
+              localStorage.setItem('perfil', false);
+              console.log("Perfil establecido en false");
+          }
+		</script>
 	</nav>
 	<div class="contenido">
 		<main>

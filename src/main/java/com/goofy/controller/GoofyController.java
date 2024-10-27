@@ -1,6 +1,7 @@
 package com.goofy.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -111,15 +112,27 @@ public class GoofyController {
 	}
 
 	@GetMapping("/mascotasLista")
-	public String listarMascotas(@RequestParam("idDueno") int idDueno, Model model) {
-		System.out.println("IDDUeño" + idDueno);
+	public String listarMascotas(@RequestParam("idDueno") Integer idDueno, Model model) {
+
 		List<Mascota> mascotas = repoMas.findByDueño_Id(idDueno);
+
 		model.addAttribute("mascotas", mascotas);
-		return "MascotaRegistro";
+		return "Perfil";
 	}
 
 	@GetMapping("/Perfil")
-	public String cargarPerfil() {
+	public String cargarPerfil( HttpSession session,Model model) {
+		Duenio usuarioActual = (Duenio) session.getAttribute("usuarioLogin");
+	    if (usuarioActual != null) {
+	        // Obtén el id del dueño logueado
+	        int idDueno = usuarioActual.getDni(); // Asegúrate de que tienes un método getId() en tu clase Duenio
+
+	        // Obtén la lista de mascotas
+	        List<Mascota> mascotas = repoMas.findByDueño_Id(idDueno);
+	        
+	        // Añade las mascotas y el dueño al modelo
+	        model.addAttribute("usuarioLogueado", usuarioActual);
+	        model.addAttribute("mascotas", mascotas);}
 		return "Perfil";
 	}
 

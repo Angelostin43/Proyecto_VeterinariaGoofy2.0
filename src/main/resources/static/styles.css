@@ -10,21 +10,26 @@
 }
 
 body {
-	background: #F5F5F5;
+	background: radial-gradient(circle, #300A40 20%, #7B16A4 100%);
 }
 
 .contenido {
-	background: radial-gradient(circle, #300A40 20%, #7B16A4 100%);
 	margin-left: 240px;
 	padding: 1rem 4rem;
 }
 
 main {
 	margin-top: 60px;
-	min-height: 90vh;
+
 }
 
-.sectionCitas h3 {
+.registro-main{
+	margin-top: 60px;
+	display: flex;
+    justify-content: center;
+}
+
+.sectionCitas h3, .sectionLogin h3 {
 	color: #555353;
 	margin-bottom: 1rem;
 }
@@ -186,7 +191,6 @@ th, td {
 .sectionLogin {
 	flex-grow: 1;
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	padding: 20px;
@@ -195,6 +199,7 @@ th, td {
 	background: radial-gradient(circle, rgba(241, 229, 190, 1) 0%,
 		rgba(255, 165, 0, 1) 70%);
 	border-radius: 15px;
+	max-width: 30rem;
 }
 
 .sectionCitas {

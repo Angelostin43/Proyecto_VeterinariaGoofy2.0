@@ -10,41 +10,41 @@
 <body>
 	<nav th:replace="~{Citas.html :: nav}"></nav>
 	<div class="contenido">
-		<main>
+		<main class="registro-main">
 			<section class="sectionLogin">
-				<div class="titulo">
-					<h2>Agendar Cita</h2>
-				</div>
-				<div id="usuarioLogin"></div>
-				<br>
-				<div>
-					<form th:object="${veterinario}" method="post">
-						<div>
-							<label>Mascota</label> <select>
+			<div class="registro-container">
+					<h3>Agendar cita</h3>
+					<form method="post" th:object="${veterinario}">
+						<div class="form-group">
+							<label for="InputFchAtencion" class="form-label">Mascota</label>
+							<select class="form-control">
 								<option value="0" selected>Seleccione...</option>
 								<option value="1">Proximamente</option>
 								<option value="2">Proximamente</option>
 							</select>
 						</div>
-						<div>
-							<label>Veterinario</label> <select th:field="*{id_veterinario}"
-								id="inputState" class="form-select">
-								<option value="0" selected>Seleccione...</option>
+						<div class="form-group">
+							<label for="InputFchAtencion" class="form-label">Veterinario</label>
+							<select th:field="*{id_veterinario}" class="form-control">
 								<option th:each="vet : ${lstVeterinarios}"
-									th:value="${vet.id_veterinario}" th:text="${vet.Nombre}"></option>
+									th:value="${vet.id_veterinario}" th:text="${vet.Nombre}">Seleccione...</option>
 							</select>
 						</div>
-						<div>
-							<label>Fecha de atención:</label> <input type="text">
+						<div class="form-group">
+							<label for="InputFchAtencion" class="form-label">Fecha de atención</label> <input
+								type="text" class="form-control"
+								id="InputFchAtencion" name="genero">
 						</div>
-						<div>
-							<label>Hora de atención:</label> <input type="text">
+						<div class="form-group">
+							<label for="InputHoraAtencion" class="form-label">Hora de atención</label> <input
+								type="text" class="form-control"
+								id="InputHoraAtencion" name="genero">
 						</div>
+						<button type="submit" class="btn btn-submit">Agendar cita</button>
 					</form>
 				</div>
-				<div>
-					<button class="boton-ingresar" type="submit">Agendar Cita</button>
-				</div>
+
+		
 				<main>
 			</section>
 	</div>

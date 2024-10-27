@@ -19,17 +19,15 @@
 						<div class="form-group">
 							<label for="InputIdDuenio" class="form-label">ID Dueño</label> <input
 								th:field="*{id_dueño}" required type="text" class="form-control"
-								id="usuarioID">
+								id="usuarioID" readonly>
 						</div>
 						<div class="form-group">
 							<label for="InputNombre" class="form-label">Nombre</label> <input
-								th:field="*{Nombre}" required type="text" class="form-control"
-								id="usuarioID">
+								th:field="*{Nombre}" required type="text" class="form-control" id="usuarioID">
 						</div>
 						<div class="form-group">
 							<label for="InputEdad" class="form-label">Edad</label> <input
-								th:field="*{Edad}" required type="number" class="form-control"
-								id="usuarioID">
+								th:field="*{Edad}" required type="number" class="form-control" id="usuarioID">
 						</div>
 						<div class="form-group">
 							<label for="InputPeso" class="form-label">Peso</label> <input
@@ -38,15 +36,14 @@
 						</div>
 						<div class="form-group">
 							<label for="InputPeso" class="form-label">Raza</label> <input
-								th:field="*{Raza}" required type="text" class="form-control"
-								id="usuarioID">
+								th:field="*{Raza}" required type="text" class="form-control" id="usuarioID">
 						</div>
 						<div class="form-group">
 							<label for="InputSexo" class="form-label">Sexo</label> <select
 								th:field="*{Sexo}" class="form-control">
 								<option value="0" selected>Seleccione...</option>
-								<option value="M">Proximamente</option>
-								<option value="F">Proximamente</option>
+								<option value="M">Macho</option>
+								<option value="F">Hembra</option>
 							</select>
 						</div>
 						<button type="submit" class="btn btn-submit">Registrar
@@ -55,16 +52,17 @@
 					<p th:text="${mensaje}" style="color: green;"></p>
 					<p th:text="${error}" style="color: red;"></p>
 				</div>
-				<main>
 			</section>
+		</main>
+
 	</div>
 
 	<script>
 		const usuarioLogueado = JSON
 				.parse(localStorage.getItem("usuarioLogin"));
 
-		if (usuarioLogueado && usuarioLogueado.id_dueño) {
-			document.getElementById('usuarioID').value = usuarioLogueado.id_dueño;
+		if (usuarioLogueado && usuarioLogueado.id) {
+			document.getElementById('usuarioID').value = usuarioLogueado.id;
 		} else {
 			document.getElementById('usuarioID').value = '0';
 		}

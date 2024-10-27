@@ -106,9 +106,18 @@ public class GoofyController {
 	}
 
 	@PostMapping("/RegistrarMascota")
-	public String registrarMascota(Model model) {
-		return "MascotaRegistro";
+	public String registrarMascota(@ModelAttribute Mascota mascota, HttpSession session, Model model) {
+	    Duenio dueño = (Duenio) session.getAttribute("usuarioLogueado");
+	    if (dueño != null) {
+	        mascota.setDueño(dueño);  
+	        repoMas.save(mascota);
+	        return "redirect:/MascotaRegistro"; 
+	    } else {
+	        model.addAttribute("error", "Debes iniciar sesión para registrar una mascota.");
+	        return "MascotaRegistro"; 
+	    }
 	}
+
 
 	@GetMapping("/mascotasLista")
 	public String listarMascotas(@RequestParam("idDueno") int idDueno, Model model) {

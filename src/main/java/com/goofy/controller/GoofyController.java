@@ -71,6 +71,25 @@ public class GoofyController {
 		}
 	}
 
+	@GetMapping("/RegistrarUsuario")
+	public String cargarRegistrarUsuario(Model model) {
+		model.addAttribute("duenio", new Duenio());
+		return "RegistrarUsuario";
+	}
+	
+	@PostMapping("/registrar")
+	public String leerRegistrar(@ModelAttribute Duenio duenio, Model model) {
+		try {
+			repoDue.save(duenio);
+			model.addAttribute("mensaje", "Registro realizado");
+			model.addAttribute("cssmensaje", "alert alert-success");
+		} catch (Exception e) {
+			model.addAttribute("mensaje", "Error al registrar" + e.getMessage());
+			model.addAttribute("cssmensaje", "alert alert-success");
+		}
+		return "AccesoSistema";
+	}
+	
 	@GetMapping("/AgendarCita")
 	public String cargarAgendarCita(Model model) {
 	    model.addAttribute("cita", new Citas());
@@ -178,24 +197,5 @@ public class GoofyController {
         }
 	   
 	    return "AgendarCita"; 
-	}
-
-	@GetMapping("/RegistrarUsuario")
-	public String cargarRegistrarUsuario(Model model) {
-		model.addAttribute("duenio", new Duenio());
-		return "RegistrarUsuario";
-	}
-	
-	@PostMapping("/registrar")
-	public String leerRegistrar(@ModelAttribute Duenio duenio, Model model) {
-		try {
-			repoDue.save(duenio);
-			model.addAttribute("mensaje", "Registro realizado");
-			model.addAttribute("cssmensaje", "alert alert-success");
-		} catch (Exception e) {
-			model.addAttribute("mensaje", "Error al registrar" + e.getMessage());
-			model.addAttribute("cssmensaje", "alert alert-success");
-		}
-		return "RegistrarUsuario";
 	}
 }

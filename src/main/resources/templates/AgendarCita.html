@@ -1,61 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Agendar Cita</title>
-<link rel="stylesheet" href="/styles.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <meta charset="UTF-8">
+    <title>Agendar Cita</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 <body>
-	<nav th:replace="~{Citas.html :: nav}"></nav>
-	<div class="contenido">
-		<main class="registro-main">
-			<section class="sectionLogin">
-			<div class="registro-container">
-					<h3>Agendar cita</h3>
-					<form method="post" th:object="${veterinario}">
-						<div class="form-group">
-							<label for="InputFchAtencion" class="form-label">Mascota</label>
-							<select class="form-control">
+    <nav th:replace="~{Citas.html :: nav}"></nav>
+    <div class="contenido">
+        <main class="registro-main">
+            <section class="sectionLogin">
+                <div class="registro-container">
+                    <h3>Agendar cita</h3>
+                    <form method="post" action="/RegistrarCita" th:object="${cita}">
+                        <!-- Selección de Mascota -->
+                        <div class="form-group">
+                            <label for="mascotaComboBox" class="form-label">Mascota</label>
+                            <select id="mascotaComboBox" th:field="*{id_mascota}" class="form-control">
 								<option value="0" selected>Seleccione...</option>
-								<option value="1">Proximamente</option>
-								<option value="2">Proximamente</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="InputFchAtencion" class="form-label">Veterinario</label>
-							<select th:field="*{id_veterinario}" class="form-control">
-								<option th:each="vet : ${lstVeterinarios}"
-									th:value="${vet.id_veterinario}" th:text="${vet.Nombre}">Seleccione...</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="InputFchAtencion" class="form-label">Fecha de atención</label> <input
-								type="text" class="form-control"
-								id="InputFchAtencion" name="genero">
-						</div>
-						<div class="form-group">
-							<label for="InputHoraAtencion" class="form-label">Hora de atención</label> <input
-								type="text" class="form-control"
-								id="InputHoraAtencion" name="genero">
-						</div>
-						<button type="submit" class="btn btn-submit">Agendar cita</button>
-					</form>
-				</div>
-			</section>
-			</main>
-	</div>
-	<script>
-		const usuarioLogueado = JSON
-				.parse(localStorage.getItem("usuarioLogin"));
+                              
+                                <option th:each="mas : ${lstMascotas}" th:value="${mas.id_mascota}" th:text="${mas.nombre}"></option>
+                            </select>
+                        </div>
 
-		if (usuarioLogueado && usuarioLogueado.nombre) {
-			document.getElementById('usuarioLogin').innerText = 'Bienvenido, '
-					+ usuarioLogueado.nombre;
-		} else {
-			document.getElementById('usuarioLogin').innerText = 'Iniciar Sesion';
-		}
-	</script>
+                        <!-- Selección de Veterinario -->
+                        <div class="form-group">
+                            <label for="InputVet" class="form-label">Veterinario</label>
+                            <select id="InputVet" th:field="*{id_veterinario}" class="form-control">
+                             <option value="0" selected>Seleccione...</option>
+                  
+                                <option th:each="vet : ${lstVeterinarios}" th:value="${vet.id_veterinario}" th:text="${vet.Nombre}"></option>
+                            </select>
+                        </div>
+
+                        <!-- Fecha de atención -->
+                        <div class="form-group">
+                            <label for="InputFchAtencion" class="form-label">Fecha de atención</label>
+                            <input type="date" th:field="*{fech_cita}" class="form-control" id="InputFchAtencion" name="fech_cita" required>
+                        </div>
+
+
+                        <button type="submit" class="btn btn-submit">Agendar cita</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        // Código para cargar las mascotas
+        const usuarioLogueado = JSON.parse(localStorage.getItem("usuarioLogin"));
+        if (usuarioLogueado && usuarioLogueado.id) {
+            fetch(`/mascotas/${usuarioLogueado.id}`)
+                .then(response => response.json())
+                .then(data => {
+                    const mascotaComboBox = document.getElementById("mascotaComboBox");
+                    data.forEach(mascota => {
+                        let option = document.createElement("option");
+                        option.value = mascota.id; 
+                        option.text = mascota.nombre; 
+                        mascotaComboBox.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error al obtener mascotas:', error));
+        }
+    </script>
 </body>
 </html>

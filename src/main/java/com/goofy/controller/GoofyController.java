@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import com.goofy.interfaces.ICitasRepository;
 import com.goofy.interfaces.IDuenioRepository;
 import com.goofy.interfaces.IMascotaRepository;
 import com.goofy.interfaces.IVeterinariosRepository;
+import com.goofy.model.Citas;
 import com.goofy.model.Duenio;
 import com.goofy.model.Mascota;
 import com.goofy.model.Veterinario;
@@ -67,6 +69,7 @@ public class GoofyController {
 
 	@GetMapping("/AgendarCita")
 	public String cargarAgendarCita(Model model) {
+	    model.addAttribute("cita", new Citas());
 		model.addAttribute("veterinario", new Veterinario());
 		model.addAttribute("lstVeterinarios", repoVet.findAll());
 		return "AgendarCita";
@@ -124,13 +127,8 @@ public class GoofyController {
 	public String cargarPerfil( HttpSession session,Model model) {
 		Duenio usuarioActual = (Duenio) session.getAttribute("usuarioLogin");
 	    if (usuarioActual != null) {
-	        // Obtén el id del dueño logueado
-	        int idDueno = usuarioActual.getDni(); // Asegúrate de que tienes un método getId() en tu clase Duenio
-
-	        // Obtén la lista de mascotas
+	        int idDueno = usuarioActual.getDni(); 
 	        List<Mascota> mascotas = repoMas.findByDueño_Id(idDueno);
-	        
-	        // Añade las mascotas y el dueño al modelo
 	        model.addAttribute("usuarioLogueado", usuarioActual);
 	        model.addAttribute("mascotas", mascotas);}
 		return "Perfil";
@@ -153,6 +151,18 @@ public class GoofyController {
 	@GetMapping("/Nosotros")
 	public String cargarNosotros(Model model) {
 		return "Nosotros";
+	}
+	@GetMapping("/mascotas/{duenioId}")
+	public ResponseEntity<List<Mascota>> obtenerMascotasPorDuenio(@PathVariable int duenioId) {
+	    List<Mascota> mascotas = repoMas.findByDueño_Id(duenioId);
+	    return ResponseEntity.ok(mascotas);
+	}
+
+	@PostMapping("/RegistrarCita")
+	public String registrarMascota(@ModelAttribute("cita") Citas cita, Model model) {
+		System.out.println( "CITA"+cita);
+	    repoCit.save(cita);  
+	    return "AgendarCita"; 
 	}
 
 }
